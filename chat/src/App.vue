@@ -4,7 +4,9 @@
       <HelloWorld/>
     </v-content>
     <v-footer :fixed="fixed" app>
-      <span>&copy; 2017</span>
+      <v-layout justify-center>
+        <span class="text-xs-center">&copy; 2017 <br>In memoriam <i><b>Adam</b></i> </span>
+      </v-layout>
     </v-footer>
   </v-app>
 </template>

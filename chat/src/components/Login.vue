@@ -13,7 +13,11 @@
         label="Password"
         @click:append="show = !show"
     ></v-text-field>
-    <v-btn @click="login">Login</v-btn>
+    <v-flex>
+      <v-layout justify-center>
+        <v-btn @click="login">Login</v-btn>
+      </v-layout>
+    </v-flex>
   </v-form>
 </template>
 
@@ -25,8 +29,8 @@ name : 'Login',
 data: () => ({
     show : false,
     rules: {
-    required: value => !!value || 'Required.',
-    min: v => v.length >= 8 || 'Min 8 characters',
+      required: value => !!value || 'Required.',
+      min: v => v.length >= 8 || 'Min 8 characters',
     },
     loginForm : {},
     name: '',
@@ -34,7 +38,7 @@ data: () => ({
 }),
 methods:{
     login : ()=>{
-
+        //nothing happens yet
     }
 }
 }

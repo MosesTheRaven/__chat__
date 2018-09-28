@@ -5,7 +5,6 @@
         <v-flex xs12 sm6 offset-sm3>
           <v-card-title primary-title>
               <h3 class="headline mb-0">Welcome to the __chat__</h3>
-              <div><br>In memoriam <i><b>Adam</b></i></div>
           </v-card-title>
           <Login/>
         </v-flex>

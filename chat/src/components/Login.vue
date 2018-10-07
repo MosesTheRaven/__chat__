@@ -15,31 +15,50 @@
     ></v-text-field>
     <v-flex>
       <v-layout justify-center>
-        <v-btn @click="login">Login</v-btn>
+        <v-btn @click="initiateRegistration">Register</v-btn>
+        <v-btn @click="initiateLogin">Login</v-btn>
       </v-layout>
     </v-flex>
   </v-form>
 </template>
 
 <script>
-import * as firebase from 'firebase'
+import * as FirebaseAPI from 'firebase'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
-name : 'Login',
-data: () => ({
-    show : false,
-    rules: {
-      required: value => !!value || 'Required.',
-      min: v => v.length >= 8 || 'Min 8 characters',
-    },
-    loginForm : {},
-    name: '',
-    password: '',
-}),
-methods:{
-    login : ()=>{
-        //nothing happens yet
+  name : 'Login',
+  computed : {
+        ...mapGetters(['isLoggedIn', 'getCrashReport']),
+  },
+
+  data: () => ({
+      show : false,
+      rules: {
+        required: name => !!name || 'Required.',
+        min: v => v.length >= 8 || 'Min 8 characters',
+      },
+      loginForm : {},
+      name: '',
+      password: '',
+  }),
+  methods:{
+    ...mapActions(['login', 'register']),
+        
+    initiateLogin(){
+      var loginData = {
+        email : this.name+"@abc.def", 
+        password : this.password
+      }
+      this.login(loginData)
+    } ,
+    initiateRegistration(){
+      var registrationData = {
+        email : this.name+"@abc.def", 
+        password : this.password
+      }
+      this.register(registrationData)
     }
-}
+  }
 }
 </script>

@@ -1,8 +1,9 @@
 <template>
+<div>
   <v-form v-model="loginForm">
     <v-text-field
       v-model="name"
-      label="Name"
+      label="Nickname"
       required
     ></v-text-field>
     <v-text-field
@@ -20,6 +21,8 @@
       </v-layout>
     </v-flex>
   </v-form>
+</div>
+  
 </template>
 
 <script>
@@ -51,6 +54,7 @@ export default {
         password : this.password
       }
       this.login(loginData)
+      console.log("clicked")
     } ,
     initiateRegistration(){
       var registrationData = {

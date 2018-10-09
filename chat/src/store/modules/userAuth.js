@@ -1,4 +1,5 @@
 import FirebaseAPI from '../../firebase/firebaseAPI'
+import VueLocalStorage from 'vue-localstorage'
 
 const state = {
   authState : false,
@@ -43,6 +44,7 @@ const actions = {
         if(userData.type == "success"){
             commit('setUserData', userData.data)
             commit('setAuthState', true)
+            localStorage
         }
         else {
             commit('setCrashReport', userData.data)

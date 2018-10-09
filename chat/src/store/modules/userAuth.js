@@ -42,9 +42,13 @@ const actions = {
   login : ({ commit }, loginData) => {
     FirebaseAPI.login(loginData.email, loginData.password, (userData)=>{
         if(userData.type == "success"){
-            commit('setUserData', userData.data)
+            var retrievedUserData = {
+              'name' : userData.data.name, 
+              'uid' : userData.data.uid
+            } 
+            commit('setUserData', retrievedUserData)
             commit('setAuthState', true)
-            localStorage
+            localStorage.setItem('user', JSON.stringify(retrievedUserData))
         }
         else {
             commit('setCrashReport', userData.data)

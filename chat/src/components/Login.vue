@@ -54,10 +54,11 @@ export default {
         password : this.password
       }
       this.login(loginData)
-      console.log("clicked")
+
     } ,
     initiateRegistration(){
       var registrationData = {
+        name : this.name,
         email : this.name+"@abc.def", 
         password : this.password
       }

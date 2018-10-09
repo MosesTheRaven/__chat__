@@ -5,6 +5,8 @@ import './plugins/vuetify'
 import App from './App.vue'
 import firebase from 'firebase'
 import store from './store/index'
+ 
+
 
 Vue.config.productionTip = false
 
@@ -19,6 +21,7 @@ var config = {
 firebase.initializeApp(config);
 
 new Vue({
+  localStorage,
   store,
   render: h => h(App)
 }).$mount('#app')

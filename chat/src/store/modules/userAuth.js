@@ -60,7 +60,7 @@ const actions = {
     FirebaseAPI.createUser(registrationData, (retData)=>{
         console.log(retData)
     })
-  }
+  },
 }
 
 

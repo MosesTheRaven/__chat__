@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-form v-model="loginForm">
+  <v-form >
     <v-text-field
       v-model="name"
       label="Nickname"
@@ -34,14 +34,12 @@ export default {
   computed : {
         ...mapGetters(['isLoggedIn', 'getCrashReport']),
   },
-
   data: () => ({
       show : false,
       rules: {
         required: name => !!name || 'Required.',
         min: v => v.length >= 8 || 'Min 8 characters',
       },
-      loginForm : {},
       name: '',
       password: '',
   }),
@@ -54,7 +52,6 @@ export default {
         password : this.password
       }
       this.login(loginData)
-
     } ,
     initiateRegistration(){
       var registrationData = {

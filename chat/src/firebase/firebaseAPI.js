@@ -29,7 +29,33 @@ const FirebaseAPI = {
             //oboznamenie uzivatela o vysledku pridavania uzivatela1
             .then(()=>processFn({type: 'success', message: "Uzivatel bol uspesne pridany!"}))
         })
-        .catch((error)=>processFn({type: 'error', message: "Pri pridavani uzivatela doslo k chybe!\n"+error.message}))
+        .catch((error)=>processFn({type: 'error', message: "Pri pridavani uzivatela doslo k chybe!\n" + error.message}))
+    },
+    firestore : {
+        sendMessage: (messageObject)=>{
+            firebase.firestore().collection('messages').add({
+                content : messageObject.content,
+                name: messageObject.sender.name,
+                uid : messageObject.sender.uid,
+                timestamp : Date.now()
+            })
+            .then((success)=>{
+                return {
+                    type : 'success',
+                    message : success
+                }
+            })
+            .catch((error)=>{
+                return {
+                    type : 'error',
+                    message : error
+                }
+            })
+        },
+        getCollection : ()=>{
+            return firebase.firestore().collection('messages')
+            .orderBy("timestamp", "asc")
+        }
     }
 }
 

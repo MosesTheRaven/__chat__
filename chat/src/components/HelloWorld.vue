@@ -2,12 +2,13 @@
   <v-layout>
     <v-flex xs12 sm6 offset-sm3>
       <v-card>
-        <v-flex xs12 sm6 offset-sm3>
-          <v-card-title primary-title>
+          <v-card-title primary-title class="justify-center">
               <h3 class="headline mb-0">Welcome to the __chat__</h3>
           </v-card-title>
-          <Login/>
-        </v-flex>
+          <v-card-text>
+            <Login v-if="!isLoggedIn"/>
+            <Chat v-else/>
+          </v-card-text>
       </v-card>
     </v-flex>
   </v-layout>
@@ -15,15 +16,18 @@
 
 <script>
 import Login from './Login'
+import Chat from './Chat'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'HelloWorld',
-  components: {
-    Login
+  computed : {
+        ...mapGetters(['isLoggedIn']),
   },
-  props: {
-    msg: String
-  }
+  components: {
+    Login,
+    Chat
+  },
 }
 </script>
 

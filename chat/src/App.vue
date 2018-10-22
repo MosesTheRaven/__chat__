@@ -5,7 +5,7 @@
     </v-content>
     <v-footer :fixed="fixed" app>
       <v-layout justify-center>
-        <span class="text-xs-center">&copy; 2017 <br>In memoriam <i><b>Adam</b></i> </span>
+        <span class="text-xs-center">&copy; 2018 <br>In memoriam <i><b>Adam</b></i> </span>
       </v-layout>
     </v-footer>
   </v-app>
@@ -13,11 +13,13 @@
 
 <script>
 import HelloWorld from './components/HelloWorld'
+import Chat from './components/Chat'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    Chat
   },
   data () {
     return {

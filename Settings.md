@@ -7,7 +7,7 @@
 5. Position in a company /What do you do?/
 6. Email /Your current email address/
 7. Phone number /Your current phone number/ 
-7.1. profile pic change by clicking on the pic frame or:
+  - 1. profile pic change by clicking on the pic frame or:
 8. Change profile picture
 
 

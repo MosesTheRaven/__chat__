@@ -49,14 +49,16 @@
 - to be developed in a case of real-life implementation
 
 
-# CONVERSATION SETTINGS (by clicking next to conversation)
+# CONVERSATION SETTINGS 
+(by clicking next to conversation)
 1. Pin 
 2. Save
 3. Delete
 4. Mark as unread
 5. Disable notifications
 
-# GROUP CONVERSATION SETTINGS (by clicking next to conversation)
+# GROUP CONVERSATION SETTINGS 
+(by clicking next to conversation)
 1. Pin 
 2. Save
 3. Delete
@@ -64,7 +66,8 @@
 5. Disable notifications
 6. Leave the conversation
 
-# PROJECT CONVERSATION SETTINGS (some things available only to Admin, yet to be discussed)
+# PROJECT CONVERSATION SETTINGS 
+(some things available only to Admin, yet to be discussed)
 1. Pin 
 2. Save
 3. Delete

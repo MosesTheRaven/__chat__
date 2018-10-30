@@ -61,7 +61,7 @@
 4. Mark as unread
 5. Disable notifications
 
-* by clicking next to conversation * 
+*by clicking next to conversation* 
 
 # GROUP CONVERSATION SETTINGS 
 1. Pin 
@@ -71,7 +71,7 @@
 5. Disable notifications
 6. Leave the conversation
 
-* by clicking next to conversation *
+*by clicking next to conversation*
 
 # PROJECT CONVERSATION SETTINGS 
 1. Pin 
@@ -81,7 +81,7 @@
 5. DIsable notifications
 6. Leave the conversation
 
-* some things available only to Admin, yet to be discussed *
+*some things available only to Admin, yet to be discussed*
 
 
 

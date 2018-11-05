@@ -31,6 +31,9 @@ export default {
 <style>
     .navigation-drawer-components {
         font-weight: 500;
+
+
+        
         font-size : 1.2em;
     }
 </style>

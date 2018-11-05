@@ -1,55 +1,21 @@
 <template>
     <div>
         <v-navigation-drawer fixed v-model="opened" app>
-            <v-list>
-                <v-card>
-                    <v-card-title>
-                        <h1>
-                            Conversations
-                        </h1>
-                    </v-card-title>
-                </v-card>
-                <v-card>
-                    <v-card-text>
-                        <v-container>
-                            <v-layout>
-                                <v-flex align-content-start justify-start>
-                                    <div style="display : flex; flex-direction : row;">
-                                        <v-avatar color="grey lighten-4">
-                                            <img src="https://image.flaticon.com/icons/svg/747/747376.svg" alt="avatar">
-                                        </v-avatar>
-                                        <h2>UserName</h2>
-                                    </div>
-                                </v-flex>
-                            </v-layout>
-                        </v-container>
-                    </v-card-text>
-                </v-card>
-                <v-list-tile >
-                    <v-list-tile-action>
-                        <v-icon @click="openSettings=!openSettings">Settings</v-icon>
-                    </v-list-tile-action>
-                </v-list-tile>
-                <v-list-tile-content v-if="openSettings">
-                        <v-list-tile-action>
-                            <v-icon @click="left=!left; content='1'">Settings 1</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-action>
-                            <v-icon @click="left=!left; content='2'">Settings 2</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-action>
-                            <v-icon @click="left=!left; content='3'">Settings 3</v-icon>
-                        </v-list-tile-action>
-                        {{content}}
-                </v-list-tile-content>
+            <v-list class="navigation-drawer-components">
+                <Conversations/>
             </v-list>
         </v-navigation-drawer>
     </div>
 </template>
 
 <script>
+import Conversations from './navigation/navigation-components/Conversations'
+
 export default {
     name : 'NavigationDrawer',
+    components : {
+        Conversations
+    },
     data() {
         return {
             // - use this to open/close the temporary drawer
@@ -62,3 +28,9 @@ export default {
     props : ['opened']
 }
 </script>
+<style>
+    .navigation-drawer-components {
+        font-weight: 500;
+        font-size : 1.2em;
+    }
+</style>

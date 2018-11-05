@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-form >
+  <v-form id="loginForm" @submit.prevent="initiateLogin">
     <v-text-field
       v-model="name"
       label="Nickname"
@@ -17,7 +17,7 @@
     <v-flex>
       <v-layout justify-center>
         <v-btn @click="initiateRegistration">Register</v-btn>
-        <v-btn @click="initiateLogin">Login</v-btn>
+        <v-btn type="submit" form="loginForm" @click="initiateLogin">Login</v-btn>
       </v-layout>
     </v-flex>
   </v-form>

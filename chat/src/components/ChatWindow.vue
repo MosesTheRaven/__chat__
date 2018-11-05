@@ -1,6 +1,6 @@
 <template>
-    <ul>
-        <p v-if="messages.length == 0">nacitavaju sa spravy</p>
+    <ul class="messages" v-chat-scroll>
+        <p v-if="messages.length == 0">Conversation is loading</p>
         <li v-else v-for="(message, index) in messages" :key="index">
             <p>
                 <strong>
@@ -23,12 +23,12 @@ export default {
             messages : []
         }
     },
-    computed : {
-        ...mapActions(['fetchMessages'])
-    },
+    // computed : {
+    //     ...mapActions(['fetchMessages'])
+    // },
     created(){
         let ref = FirebaseAPI.firestore.getCollection()
-        let newMessages = []
+        // let newMessages = []
         ref.onSnapshot((snapshot)=>{
             snapshot.docChanges().forEach(change=>{
                 if(change.type == "added"){
@@ -40,11 +40,34 @@ export default {
                         content : change.doc.data().content,
                         timestamp : change.doc.data().timestamp
                     }
-                    newMessages.push(messageObject)
+                    this.messages.push(messageObject)
+                    // newMessages.push(messageObject)
                 }
             })
-            this.messages = newMessages
+            // this.messages = newMessages
         })
     }
 }
 </script>
+
+<style>
+    .messages {
+        max-height: 400px;
+        overflow: auto;
+        list-style-type: none;
+    }
+    .messages strong{
+        font-size: 1.1em;
+        color : whitesmoke;
+    }
+
+    .messages::-webkit-scrollbar{
+        width : 3px;
+    }
+    .messages::-webkit-scrollbar-track{
+        background : white;
+    }   
+    .messages::-webkit-scrollbar-thumb{
+        background : gray;
+    } 
+</style>

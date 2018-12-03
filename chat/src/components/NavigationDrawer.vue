@@ -34,7 +34,6 @@ export default {
             left : false,
             openSettings : false,
             content : '0'
-            
         }
     },
     props : ['opened']

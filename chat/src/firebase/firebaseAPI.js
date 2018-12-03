@@ -31,6 +31,9 @@ const FirebaseAPI = {
         })
         .catch((error)=>processFn({type: 'error', message: "Pri pridavani uzivatela doslo k chybe!\n" + error.message}))
     },
+    retrieveUsers: ()=>{
+        return firebase.database().ref('users')
+    },
     firestore : {
         sendMessage: (messageObject)=>{
             firebase.firestore().collection('messages').add({
@@ -57,6 +60,7 @@ const FirebaseAPI = {
             .orderBy("timestamp", "asc")
         }
     }
+
 }
 
 export default FirebaseAPI

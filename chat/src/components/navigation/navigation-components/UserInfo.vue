@@ -29,6 +29,7 @@ export default {
     },
     created(){
         this.username = this.getUserData.name;
+        if (!this.username) this.username = "Username"
     }
 }
 </script>

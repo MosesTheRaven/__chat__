@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-navigation-drawer fixed v-model="opened" app>
-            <v-list>
+            <v-list >
                 <v-list-group value="true" class="navigation-drawer-components">
                     <UserInfo/>
                     <Conversations/>

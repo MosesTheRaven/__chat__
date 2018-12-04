@@ -9,7 +9,7 @@
                     </v-list-tile-title>
                 </v-list-tile>
             </v-list-tile>
-            <v-list-tile v-for="(conversation, i) in getUsers" :key="i" @click="console.log('clicked')">
+            <v-list-tile v-for="(conversation, i) in getConversations" :key="i" @click="console.log('clicked')">
                 <v-list-tile-title v-text="conversation.name"></v-list-tile-title>
             </v-list-tile>
         </v-list-group>
@@ -21,17 +21,17 @@ export default {
     name : 'Conversations',
     data(){
         return {
-            conversations : ['Users loading']
+            conversations : ['Conversations loading']
         }
     },
     computed: {
-        ...mapGetters(['getUsers'])
+        ...mapGetters(['getConversations', 'getUserData'])
     },
     methods: {
-        ...mapActions(['retrieveUsers'])
+        ...mapActions(['retrieveConversations'])
     },
     created(){
-        this.retrieveUsers()
+        this.retrieveConversations(this.getUserData.uid)
     }
 }
 </script>

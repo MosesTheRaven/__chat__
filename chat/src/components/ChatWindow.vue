@@ -27,7 +27,7 @@ export default {
     //     ...mapActions(['fetchMessages'])
     // },
     created(){
-        let ref = FirebaseAPI.firestore.getCollection()
+        let ref = FirebaseAPI.firestore.getCollection('messages')
         // let newMessages = []
         ref.onSnapshot((snapshot)=>{
             snapshot.docChanges().forEach(change=>{

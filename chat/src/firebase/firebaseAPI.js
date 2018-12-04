@@ -34,6 +34,12 @@ const FirebaseAPI = {
     retrieveUsers: ()=>{
         return firebase.database().ref('users')
     },
+    retrieveConversations: (uid)=>{
+        return firebase.database().ref('users/' + uid + '/conversations')
+    },
+    retrieveConversationInfo : (cid)=>{
+        return firebase.database().ref('conversations/' + cid)
+    },
     firestore : {
         sendMessage: (messageObject)=>{
             firebase.firestore().collection('messages').add({
@@ -55,8 +61,8 @@ const FirebaseAPI = {
                 }
             })
         },
-        getCollection : ()=>{
-            return firebase.firestore().collection('messages')
+        getCollection : (cid)=>{
+            return firebase.firestore().collection(cid)
             .orderBy("timestamp", "asc")
         }
     }

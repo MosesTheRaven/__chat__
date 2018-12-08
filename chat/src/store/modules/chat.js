@@ -3,15 +3,19 @@ import userAuth from '../modules/userAuth'
 
 const state = {
   users : {},
-  conversations : []
+  conversations : [],
+  currentConversation : 'messages'
 }
   
   const getters = {
-    getUsers : (state) =>{
+    getUsers : (state) => {
       return state.users
     },
-    getConversations : (state) =>{
+    getConversations : (state) => {
       return state.conversations
+    },
+    getCurrentConversation : () => {
+      return state.currentConversation
     }
   }
   
@@ -23,11 +27,13 @@ const state = {
       let conversations = state.conversations
       conversations.push(newConversation)
       state.conversations = conversations
-      console.log(state.conversations)
+    },
+    setCurrentConversation : (state, newCurrentConversation) => {
+      state.currentConversation = newCurrentConversation
     }
     
   }
-  
+
   const actions = {
     sendMessage : ({commit}, messageObject)=>{
       return FirebaseAPI.firestore.sendMessage(messageObject)
@@ -44,6 +50,12 @@ const state = {
         })
         // commit('setConversations', conversationsDataSnapshot.val())
       })
+    },
+    createNewConversation : ({commit}, newConversation)=>{
+      return FirebaseAPI.createNewConversation(newConversation)
+    },
+    setNewCurrentConversation: ({commit}, newCurrentConversation)=>{
+      commit('setCurrentConversation', newCurrentConversation)
     }
   }
   

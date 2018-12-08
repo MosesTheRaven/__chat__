@@ -1,10 +1,7 @@
 <template>
     <v-flex>
         <v-form @submit.prevent="initiateMessageSend">
-            <v-text-field
-                label="type message here.."
-                v-model="message"
-            />
+            <v-text-field label="type message here.." v-model="message"/>
         </v-form>   
     </v-flex>
     
@@ -21,20 +18,23 @@ export default {
         }
     },
     computed : {
-        ...mapGetters(['getUserData']),
+        ...mapGetters(['getUserData', 'getCurrentConversation']),
     },
     methods: {
         ...mapActions(['sendMessage']),
     
         initiateMessageSend() {
             if(this.message != ""){
-                this.sendMessage({
-                content : this.message,
-                sender : {
-                    name : this.getUserData.name,
-                    uid : this.getUserData.uid 
-                    }
-                })
+                var messageObject = {
+                    content : this.message,
+                    sender : {
+                        name : this.getUserData.name,
+                        uid : this.getUserData.uid 
+                    },
+                    collection : this.getCurrentConversation
+                }
+                console.log(this.getCurrentConversation, messageObject)
+                this.sendMessage(messageObject)
                 this.message = "" 
             }
         }

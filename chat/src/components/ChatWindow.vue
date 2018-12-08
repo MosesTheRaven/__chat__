@@ -14,40 +14,70 @@
 
 <script>
 import FirebaseAPI from '../firebase/firebaseAPI'
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     name : 'ChatWindow',
     data(){
         return {
-            messages : []
+            messages : [],
         }
     },
-    // computed : {
-    //     ...mapActions(['fetchMessages'])
-    // },
-    created(){
-        let ref = FirebaseAPI.firestore.getCollection('messages')
-        // let newMessages = []
-        ref.onSnapshot((snapshot)=>{
-            snapshot.docChanges().forEach(change=>{
-                if(change.type == "added"){
-                    let messageObject = {
-                        sender : {
-                            name : change.doc.data().name,
-                            uid : change.doc.data().uid
-                        },
-                        content : change.doc.data().content,
-                        timestamp : change.doc.data().timestamp
+    methods : {
+        ...mapActions(['setNewCurrentConversation']),
+        fetchMessages(){
+
+        }
+    },
+    computed : {
+        ...mapGetters(['getCurrentConversation'])
+    },
+    watch :{
+        getCurrentConversation : function(){
+            this.messages = []
+            let ref = FirebaseAPI.firestore.getCollection(this.getCurrentConversation)
+            // let newMessages = []
+            ref.onSnapshot((snapshot)=>{
+                snapshot.docChanges().forEach(change=>{
+                    if(change.type == "added"){
+                        let messageObject = {
+                            sender : {
+                                name : change.doc.data().name,
+                                uid : change.doc.data().uid
+                            },
+                            content : change.doc.data().content,
+                            timestamp : change.doc.data().timestamp
+                        }
+                        this.messages.push(messageObject)
+                        // newMessages.push(messageObject)
                     }
-                    this.messages.push(messageObject)
-                    // newMessages.push(messageObject)
-                }
+                })
+                // this.messages = newMessages
             })
-            // this.messages = newMessages
-        })
+        }
+    },
+    created(){
+            let ref = FirebaseAPI.firestore.getCollection(this.getCurrentConversation)
+            // let newMessages = []
+            ref.onSnapshot((snapshot)=>{
+                snapshot.docChanges().forEach(change=>{
+                    if(change.type == "added"){
+                        let messageObject = {
+                            sender : {
+                                name : change.doc.data().name,
+                                uid : change.doc.data().uid
+                            },
+                            content : change.doc.data().content,
+                            timestamp : change.doc.data().timestamp
+                        }
+                        this.messages.push(messageObject)
+                        // newMessages.push(messageObject)
+                    }
+                })
+                // this.messages = newMessages
+            })
+        }
     }
-}
 </script>
 
 <style>

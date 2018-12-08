@@ -9,7 +9,6 @@
 import Toolbar from './Toolbar'
 import NavigationDrawer from './NavigationDrawer'
 import { mapGetters } from 'vuex'
-
 export default {
     name : 'Navigation',
     components: {

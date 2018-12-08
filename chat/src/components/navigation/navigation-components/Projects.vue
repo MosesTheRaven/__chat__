@@ -1,5 +1,5 @@
 <template>
-    <v-list-group value="true"  no-action sub-group>
+    <v-list-group value="true" no-action sub-group>
         <v-list-tile slot="activator">
             <v-list-tile>
                 <v-list-tile-title>

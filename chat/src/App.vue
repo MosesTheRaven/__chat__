@@ -1,6 +1,8 @@
 <template>
-  <v-app dark>
+  <v-app>
     <Navigation/>
+    <!-- <Navigation :opened="drawer"/>
+    <Toolbar @clicked="switchDrawer"/> -->
     <v-content>
       <v-container fluid fill-height>
         <v-layout justify-center align-center>
@@ -22,17 +24,25 @@
 import HelloWorld from './components/HelloWorld'
 import Chat from './components/Chat'
 import Navigation from './components/Navigation'
+import Toolbar from './components/Toolbar'
 
 export default {
   name: 'App',
   components: {
     HelloWorld,
     Chat,
-    Navigation
+    Navigation,
+    Toolbar
 },
   data () {
     return {
+      drawer : true
     }
-  }
+  },
+  methods : {
+    switchDrawer(){
+      this.drawer = !this.drawer
+    }
+  },
 }
 </script>

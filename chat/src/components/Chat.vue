@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <v-layout  column absolute bottom>
         <ChatWindow/>
         <NewMessage/>
-    </div>
+    </v-layout>
 </template>
 
 <script>

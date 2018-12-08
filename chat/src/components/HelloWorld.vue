@@ -1,15 +1,8 @@
 <template>
   <v-layout>
     <v-flex>
-      <v-card>
-          <v-card-title primary-title class="justify-center">
-              <h3 class="headline mb-0">Welcome to the __chat__</h3>
-          </v-card-title>
-          <v-card-text>
-            <Login v-if="!isLoggedIn"/>
-            <Chat v-else/>
-          </v-card-text>
-      </v-card>
+      <Login v-if="!isLoggedIn"/>
+      <Chat v-else/>
     </v-flex>
   </v-layout>
 </template>

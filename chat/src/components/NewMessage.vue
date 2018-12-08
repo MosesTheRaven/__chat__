@@ -33,7 +33,6 @@ export default {
                     },
                     collection : this.getCurrentConversation
                 }
-                console.log(this.getCurrentConversation, messageObject)
                 this.sendMessage(messageObject)
                 this.message = "" 
             }

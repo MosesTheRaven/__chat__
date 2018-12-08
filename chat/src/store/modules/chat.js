@@ -30,8 +30,7 @@ const state = {
     },
     setCurrentConversation : (state, newCurrentConversation) => {
       state.currentConversation = newCurrentConversation
-    }
-    
+    }    
   }
 
   const actions = {

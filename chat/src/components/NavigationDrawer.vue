@@ -1,11 +1,10 @@
 <template>
-    <v-navigation-drawer clipped app v-model="opened">
+    <v-navigation-drawer dark class="blue-grey darken-2"  clipped app v-model="opened">
         <v-list dense>
             <!-- <v-list-group value="true" class="navigation-drawer-components"> -->
                 <UserInfo/>
                 <Conversations/>
-                <NewConversationDialog/>
-                <Channels/>
+                <!-- <Channels/> -->
                 <Projects/>
             <!-- </v-list-group> -->
         </v-list>
@@ -17,7 +16,6 @@ import Conversations from './navigation/navigation-components/Conversations'
 import UserInfo from './navigation/navigation-components/UserInfo'
 import Channels from './navigation/navigation-components/Channels'
 import Projects from './navigation/navigation-components/Projects'
-import NewConversationDialog from './navigation/navigation-components/NewConversationDialog.vue'
 
 
 export default {
@@ -26,12 +24,9 @@ export default {
         UserInfo,
         Conversations,
         Channels,
-        Projects,
-        NewConversationDialog
+        Projects
     },
     props : ['opened']
 
 }
 </script>
-<style>
-</style>

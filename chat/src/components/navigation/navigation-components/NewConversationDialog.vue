@@ -1,9 +1,15 @@
 <template>
-     <v-dialog v-model="dialog" persistent max-width="600px">
-      <v-btn slot="activator" color="primary" dark>Open Dialog</v-btn>
-      <v-card>
+  <v-list-tile class="font-italic" @click="toggleDialog">
+    <v-list-tile-action>
+      <v-avatar>
+        <i class="fas fa-plus"></i>
+      </v-avatar>
+    </v-list-tile-action>
+    <v-list-tile-title v-text="buttonString"></v-list-tile-title>
+      <v-dialog v-model="dialog" persistent max-width="600px">
+       <v-card light>
         <v-card-title>
-          <span class="headline">New Conversation</span>
+          <span class="headline">Start new conversation</span>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
@@ -15,21 +21,22 @@
               </v-flex>
             </v-layout>
             <v-form v-model="newConversation">
-                <v-checkbox v-for="(user,index) in getUsers" :key="index"
-                :label="user.name" v-model="conversation.selectedUsers" :value="user.uid"></v-checkbox>
+              <v-layout row wrap>
+                <v-flex class="checkbox-wrapper" xs12 sm4 md4 v-for="(user,index) in getUsers" :key="index">
+                  <v-checkbox color="secondary darken-2" :label="user.name" v-model="conversation.selectedUsers" :value="user.uid"></v-checkbox>
+                </v-flex>
+              </v-layout>
             </v-form>
           </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click="initiateNewConversationCreation">Save</v-btn>
-          <!-- <v-flex v-if="loader">
-            <v-progress-circular  indeterminate color="primary"></v-progress-circular>
-        </v-flex> -->
+            <v-btn color="blue darken-2" flat @click="dialog = false">Close</v-btn>
+            <v-btn class="white--text" color="secondary darken-2"  @click="initiateNewConversationCreation">Save</v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+      </v-dialog>
+  </v-list-tile>
 </template>
 
 <script>
@@ -38,6 +45,7 @@ import {mapGetters, mapActions} from 'vuex'
 export default {
     name : 'NewConversationDialog',
     data: () => ({
+        buttonString : 'Start New',
         dialog: false,
         users: [],
         conversation: {
@@ -59,7 +67,9 @@ export default {
           this.users = []
           this.conversation = {}
           this.dialog = false
-
+        },
+        toggleDialog(){
+          this.dialog = !this.dialog
         }
     },
     created() {
@@ -70,3 +80,14 @@ export default {
 
 }
 </script>
+<style>
+  .checkbox-wrapper .v-input__slot{
+    margin-bottom : 0px !important
+  }
+  @media screen and (max-width: 769px){
+    .checkbox-wrapper .v-input{
+      margin-top : 0px !important;
+    }
+
+  }
+</style>

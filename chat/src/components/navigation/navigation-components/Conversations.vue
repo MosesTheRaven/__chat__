@@ -38,10 +38,11 @@ export default {
         ...mapGetters(['getConversations', 'getUserData'])
     },
     methods: {
-        ...mapActions(['retrieveConversations', 'setNewCurrentConversation']),
+        ...mapActions(['retrieveConversations', 'setNewCurrentConversation', 'updateProjectSet']),
 
         changeConversation(conversation){
             this.setNewCurrentConversation(conversation)
+            this.updateProjectSet(false)
         }
         
     },

@@ -1,10 +1,13 @@
 import FirebaseAPI from '../../firebase/firebaseAPI'
 import VueLocalStorage from 'vue-localstorage'
+import notifaction from 'vuex'
 
 const state = {
   authState : false,
   userData : {},
-  crashReport : ""
+  crashReport : "",
+  
+  notificationText : ""
 
 }
 
@@ -17,6 +20,9 @@ const getters = {
   },
   getCrashReport : (state) =>{
     return state.crashReport
+  },
+  getNotification : (state)=>{
+    return state.notificationText
   }
 }
 
@@ -29,17 +35,23 @@ const mutations = {
   },
   setCrashReport : (state, newCrashReport) => {
     state.crashReport = newCrashReport
+  },
+  setNotificationText : (state, newNotificationText) => {
+    state.notificationText = newNotificationText
   }
 }
 
 const actions = {
+  sendNotification : ({ commit }, newNotificationText) => {
+    commit('setNotificationText', newNotificationText)
+  },
   updateUserData : ({ commit }, newUserData) => {
     commit('setUserData', newUserData)
   },
   logout : ({ commit }) => {
     commit('setAuthState', false)
   },
-  login : ({ commit }, loginData) => {
+  login : ({ commit, dispatch }, loginData) => {
     FirebaseAPI.login(loginData.email, loginData.password, (userData)=>{
         if(userData.type == "success"){
             var retrievedUserData = {
@@ -49,16 +61,21 @@ const actions = {
             commit('setUserData', retrievedUserData)
             commit('setAuthState', true)
             localStorage.setItem('user', JSON.stringify(retrievedUserData))
+
+            dispatch('sendNotification', 'Sucessfully logged in')
         }
         else {
             commit('setCrashReport', userData.data)
-            console.log(userData.error)
+            dispatch('sendNotification', 'There was a problem with your login')
+
+            // rootState.notification.updateNotificationText('Incorrect nickname or password')
+
         }
     })
   },
-  register : ({commit}, registrationData)=>{
+  register : ({dispatch}, registrationData)=>{
     FirebaseAPI.createUser(registrationData, (retData)=>{
-        console.log(retData)
+      dispatch('sendNotification', retData.message)
     })
   },
 }

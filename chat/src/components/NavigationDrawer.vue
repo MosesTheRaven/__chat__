@@ -6,6 +6,7 @@
                 <Conversations/>
                 <!-- <Channels/> -->
                 <Projects/>
+                
             <!-- </v-list-group> -->
         </v-list>
     </v-navigation-drawer>
@@ -17,7 +18,6 @@ import UserInfo from './navigation/navigation-components/UserInfo'
 import Channels from './navigation/navigation-components/Channels'
 import Projects from './navigation/navigation-components/Projects'
 
-
 export default {
     name : 'NavigationDrawer',
     components : {
@@ -26,6 +26,7 @@ export default {
         Channels,
         Projects
     },
+
     watch : {
         opened : function(){
             if(!this.opened) this.$emit('closed')

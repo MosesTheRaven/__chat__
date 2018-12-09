@@ -59,7 +59,7 @@ export default {
         ...mapGetters(['getUsers'])
     },
     methods : {
-        ...mapActions(['retrieveUsers', 'createNewConversation']),
+        ...mapActions(['retrieveUsers', 'createNewConversation', 'sendNotification']),
 
         initiateNewConversationCreation(){
 
@@ -68,9 +68,10 @@ export default {
             this.users = []
             this.conversation = {}
             this.dialog = false  
+            this.sendNotification('Successfully created a new conversation')
           }
           else {
-            // notify the user to check his conversation
+            this.sendNotification('There was a problem while creating a conversation')
           }
           
         },

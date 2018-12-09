@@ -2,6 +2,7 @@
   <v-app>
     <Navigation @emitMobileDrawerChange="drawer=false" :drawer="drawer"/>
     <Content @emitToApp="switchDrawer"/>
+    <Notification/>
     <v-footer v-if="!this.$mq === 'sm'" fixed app >
       <v-layout justify-center>
         <span class="text-xs-center">&copy; 2018 <br>In memoriam <i><b>Adam</b></i></span>
@@ -15,6 +16,8 @@ import Content from './components/Content'
 import Chat from './components/Chat'
 import Navigation from './components/Navigation'
 import Toolbar from './components/Toolbar'
+import Notification from './components/notifications/Notification'
+
 
 export default {
   name: 'App',
@@ -22,7 +25,8 @@ export default {
     Content,
     Chat,
     Navigation,
-    Toolbar
+    Toolbar,
+    Notification
 },
   data () {
     return {

@@ -1,5 +1,6 @@
 import * as firebase from 'firebase'
 
+
 const FirebaseAPI = {
     login : (email, password, processFn) =>{
         firebase.auth().signInWithEmailAndPassword(email,password)
@@ -31,9 +32,9 @@ const FirebaseAPI = {
             .then(firebase.database().ref('conversation/-LTIJX_T8R1R_dAXXWc5/selectedUsers').push(data.user.uid)
             )
             //oboznamenie uzivatela o vysledku pridavania uzivatela1
-            .then(()=>processFn({type: 'success', message: "Uzivatel bol uspesne pridany!"}))
+            .then(()=>processFn({type: 'success', message: "Successfully registered. You can now log in"}))
         })
-        .catch((error)=>processFn({type: 'error', message: "Pri pridavani uzivatela doslo k chybe!\n" + error.message}))
+        .catch((error)=>processFn({type: 'error', message: "There was a problem with registration" + error.message}))
     },
     createNewConversation : (conv) =>{
         var newConversationRef = firebase.database().ref('conversations/').push(conv)
@@ -59,8 +60,7 @@ const FirebaseAPI = {
     retrieveConversationInfo : (cid)=>{
         return firebase.database().ref('conversations/' + cid)
     },
-
-
+    
     firestore : {
         sendInitialMessage : (messageObject, collection)=>{
             firebase.firestore().collection(collection).add({

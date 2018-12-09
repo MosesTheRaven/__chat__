@@ -51,6 +51,7 @@ export default {
         email : this.name+"@abc.def", 
         password : this.password
       }
+      this.setNewNotification
       this.login(loginData)
     } ,
     initiateRegistration(){

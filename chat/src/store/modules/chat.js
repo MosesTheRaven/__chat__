@@ -5,7 +5,7 @@ const state = {
   users : {},
   conversations : [],
   currentConversation : 'Global chatroom',
-  currentConversationUsers : 'all'
+  currentConversationUsers : 'all',
 }
   
   const getters = {
@@ -20,7 +20,7 @@ const state = {
     },
     getCurrentConversationUsers : () => {
       return state.currentConversationUsers
-    }
+    },
   }
   
   const mutations = {

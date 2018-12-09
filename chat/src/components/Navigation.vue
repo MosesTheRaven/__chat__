@@ -1,7 +1,7 @@
 <template>
     <div v-if="isLoggedIn">
         <Toolbar @clicked="openRightDrawer"/>
-        <NavigationDrawer :opened="openedRightDrawer"/>
+        <NavigationDrawer :opened="openedRightDrawer" @closed="setClosed"/>
     </div>    
 </template>
 
@@ -18,6 +18,9 @@ export default {
     methods : {
         openRightDrawer(){
             this.openedRightDrawer = !this.openedRightDrawer
+        },
+        setClosed(){
+            this.openedRightDrawer = false
         }
     },
     computed : {
@@ -25,8 +28,12 @@ export default {
     },
     data() {
         return {
-            openedRightDrawer : false,
+            openedRightDrawer : null,
         }
-    }
+    },
+    created() {
+        this.openedRightDrawer =  this.$mq === 'sm' ? null : true
+       
+    },
 }
 </script>

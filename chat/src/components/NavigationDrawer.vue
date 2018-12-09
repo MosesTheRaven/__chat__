@@ -26,7 +26,11 @@ export default {
         Channels,
         Projects
     },
+    watch : {
+        opened : function(){
+            if(!this.opened) this.$emit('closed')
+        }
+    },
     props : ['opened']
-
 }
 </script>

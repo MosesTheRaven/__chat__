@@ -19,7 +19,6 @@ const FirebaseAPI = {
         //vytvorenie uzivatela v auth firebase
         firebase.auth().createUserWithEmailAndPassword(loginData.email, loginData.password)
         .then((data)=>{
-            console.log(data, loginData)
             //pridanie uzivatela do db firebase
             firebase.database().ref('users/' + data.user.uid).set(
             {
@@ -55,6 +54,8 @@ const FirebaseAPI = {
     retrieveConversationInfo : (cid)=>{
         return firebase.database().ref('conversations/' + cid)
     },
+
+
     firestore : {
         sendInitialMessage : (messageObject, collection)=>{
             firebase.firestore().collection(collection).add({

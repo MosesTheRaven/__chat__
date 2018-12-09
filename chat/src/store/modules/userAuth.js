@@ -36,6 +36,10 @@ const actions = {
   updateUserData : ({ commit }, newUserData) => {
     commit('setUserData', newUserData)
   },
+  returnedUserLogin: ({commit}) =>{
+    commit('setUserData', {'name' : localStorage.getItem('user').name, 'uid' : localStorage.getItem('user').uid})
+    commit('setAuthState', true)
+  },
   logout : ({ commit }) => {
     commit('setAuthState', false)
   },

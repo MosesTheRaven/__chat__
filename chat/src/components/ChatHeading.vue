@@ -6,19 +6,30 @@
                     <v-icon class="white--text ">forum</v-icon>
                 </v-avatar>
             </v-list-tile-avatar>
-                <v-flex column>
-                    <span class="headline font-weight-bold">conversation_name</span>
-                    <span >x/y online</span>
+                <v-flex column wrap>
+                    <span class="headline font-weight-bold">{{ getCurrentConversation }}</span>
+                    <span >({{ getCurrentConversationUsers }} users)</span>
                 </v-flex>
-            <v-list-tile-title class="title font-weight-black">
-            </v-list-tile-title>
+            
         </v-list-tile>  
     </div>
 </template>
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
     name : 'ChatHeading',
-
+    data() {
+        return {
+            conversation : {
+                name : 'Conversation name loading',
+                users : 'Loading'
+            }
+        }
+    },
+    computed :{
+        ...mapGetters(['getCurrentConversation', 'getCurrentConversationUsers'])
+    },
 }
 </script>
 

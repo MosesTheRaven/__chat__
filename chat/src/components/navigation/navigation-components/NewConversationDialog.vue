@@ -62,10 +62,17 @@ export default {
         ...mapActions(['retrieveUsers', 'createNewConversation']),
 
         initiateNewConversationCreation(){
-          this.createNewConversation(this.conversation)
-          this.users = []
-          this.conversation = {}
-          this.dialog = false
+
+          if(this.conversation.name != "" && this.conversation.selectedUsers.length > 0){
+            this.createNewConversation(this.conversation)
+            this.users = []
+            this.conversation = {}
+            this.dialog = false  
+          }
+          else {
+            // notify the user to check his conversation
+          }
+          
         },
         toggleDialog(){
           this.dialog = !this.dialog

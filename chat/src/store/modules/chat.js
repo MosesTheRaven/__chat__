@@ -4,7 +4,8 @@ import userAuth from '../modules/userAuth'
 const state = {
   users : {},
   conversations : [],
-  currentConversation : 'messages'
+  currentConversation : 'Global chatroom',
+  currentConversationUsers : 'all'
 }
   
   const getters = {
@@ -16,6 +17,9 @@ const state = {
     },
     getCurrentConversation : () => {
       return state.currentConversation
+    },
+    getCurrentConversationUsers : () => {
+      return state.currentConversationUsers
     }
   }
   
@@ -30,7 +34,10 @@ const state = {
     },
     setCurrentConversation : (state, newCurrentConversation) => {
       state.currentConversation = newCurrentConversation
-    }    
+    },
+    setCurrentConversationUsers : (state, newCurrentConversationUsers) => {
+      state.currentConversationUsers = newCurrentConversationUsers
+    }
   }
 
   const actions = {
@@ -45,7 +52,7 @@ const state = {
     retrieveConversations : ({commit}, uid)=>{
       FirebaseAPI.retrieveConversations(uid).on('child_added', (conversationDataSnapshot)=>{
         FirebaseAPI.retrieveConversationInfo(conversationDataSnapshot.key).on('value', (conversationInfoSnapshot)=>{
-          commit('addConversation', conversationInfoSnapshot.val())
+          if(conversationDataSnapshot.val()) commit('addConversation', conversationInfoSnapshot.val())
         })
         // commit('setConversations', conversationsDataSnapshot.val())
       })
@@ -54,7 +61,9 @@ const state = {
       return FirebaseAPI.createNewConversation(newConversation)
     },
     setNewCurrentConversation: ({commit}, newCurrentConversation)=>{
-      commit('setCurrentConversation', newCurrentConversation)
+      commit('setCurrentConversation', newCurrentConversation.name)
+      commit('setCurrentConversationUsers', newCurrentConversation.selectedUsers.length)
+      
     }
   }
   

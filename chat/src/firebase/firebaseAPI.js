@@ -24,7 +24,12 @@ const FirebaseAPI = {
             {
                 uid : data.user.uid,
                 name : loginData.name,
+                conversations : {
+                    '-LTIJX_T8R1R_dAXXWc5' : true
+                }
             })
+            .then(firebase.database().ref('conversation/-LTIJX_T8R1R_dAXXWc5/selectedUsers').push(data.user.uid)
+            )
             //oboznamenie uzivatela o vysledku pridavania uzivatela1
             .then(()=>processFn({type: 'success', message: "Uzivatel bol uspesne pridany!"}))
         })

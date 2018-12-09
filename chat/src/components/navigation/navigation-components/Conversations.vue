@@ -9,7 +9,7 @@
                 </v-list-tile-title>
             </v-list-tile>
         </v-list-tile>
-        <v-list-tile v-for="(conversation, i) in getConversations" :key="i" @click="changeConversation(conversation.name)">
+        <v-list-tile v-for="(conversation, i) in getConversations" :key="i" @click="changeConversation(conversation)">
             <v-list-tile-action>
                 <v-avatar>
                     <v-icon dark>message</v-icon>
@@ -43,6 +43,7 @@ export default {
         changeConversation(conversation){
             this.setNewCurrentConversation(conversation)
         }
+        
     },
     created(){
         this.retrieveConversations(this.getUserData.uid)

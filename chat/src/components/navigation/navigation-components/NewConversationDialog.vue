@@ -22,7 +22,7 @@
             </v-layout>
             <v-form>
               <v-layout row wrap>
-                <v-flex class="checkbox-wrapper" xs12 sm4 md4 v-for="(user,index) in getUsers" :key="index">
+                <v-flex v-if="user.name!='WorkChatAdmin'" class="checkbox-wrapper" xs12 sm4 md4 v-for="(user,index) in getUsers" :key="index">
                   <v-checkbox color="secondary darken-2" :label="user.name" v-model="conversation.selectedUsers" :value="user.uid"></v-checkbox>
                 </v-flex>
               </v-layout>

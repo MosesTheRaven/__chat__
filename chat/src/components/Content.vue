@@ -1,10 +1,8 @@
 <template>
-  <v-layout>
-    <v-flex>
-      <Login v-if="!isLoggedIn"/>
-      <Chat v-else/>
-    </v-flex>
-  </v-layout>
+  <v-content>
+    <Login v-if="!isLoggedIn"/>
+    <Chat v-else/>
+  </v-content>
 </template>
 
 <script>
@@ -13,7 +11,7 @@ import Chat from './Chat'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'HelloWorld',
+  name: 'Content',
   computed : {
         ...mapGetters(['isLoggedIn']),
   },

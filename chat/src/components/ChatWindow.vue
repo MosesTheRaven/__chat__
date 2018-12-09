@@ -1,17 +1,19 @@
 <template>
-    <div>
-        <ul class="messages" v-chat-scroll>
-            <p v-if="messages.length == 0">Conversation is loading</p>
-            <li v-else v-for="(message, index) in messages" :key="index">
-                <p>
-                    <strong>
-                        {{message.sender.name}}:
-                    </strong>
-                    {{message.content}}
-                </p>
-            </li>
+    <ul class="messages" v-chat-scroll>
+        <p v-if="messages.length == 0">Conversation is loading</p>
+        <li v-else v-for="(message, index) in messages" :key="index">
+            <v-flex row  class="py-1">
+                <v-avatar size="30" class="message-sender-avatar ">
+                    <v-icon>account_circle</v-icon>
+                </v-avatar>
+                <span class="message-sender">
+                        {{message.sender.name}}
+                </span>
+                <p class="message-content">{{message.content}}</p>
+            </v-flex>
+            
+        </li>
     </ul>
-    </div>
 </template>
 
 <script>
@@ -90,22 +92,32 @@ export default {
 
 <style>
     .messages {
+        padding-left : 10px;
         max-height: 70vh;
         overflow: auto;
         list-style-type: none;
     }
-    .messages strong{
-        font-size: 1.1em;
-        color : black;
+    .message-sender-avatar{
+        margin-top : -5px;
+    }
+    .message-sender{
+        margin-top : 5px !important;
+        font-size: 1.25em;
+        color : #1565C0;
+    }
+    .message-content{
+        padding-left : 33px;
     }
 
     .messages::-webkit-scrollbar{
-        width : 3px;
+        width : 5px;
     }
     .messages::-webkit-scrollbar-track{
-        background : white;
+        /* background : white; */
     }   
     .messages::-webkit-scrollbar-thumb{
-        background : gray;
+        border-radius : 5px;
+        background : rgba(30,136,229,.2);
+        box-shadow: 0 0 50px -10px #1E88E5 !important;
     } 
 </style>

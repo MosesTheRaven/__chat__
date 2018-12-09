@@ -1,28 +1,28 @@
 <template>
-<div>
-  <v-form id="loginForm" @submit.prevent="initiateLogin">
-    <v-text-field
-      v-model="name"
-      label="Nickname"
-      required
-    ></v-text-field>
-    <v-text-field
-        v-model="password"
-        :rules="[rules.required, rules.min]"
-        :type="show ? 'text' : 'password'"
-        name="input-10-1"
-        label="Password"
-        @click:append="show = !show"
-    ></v-text-field>
-    <v-flex>
-      <v-layout justify-center>
-        <v-btn @click="initiateRegistration">Register</v-btn>
-        <v-btn type="submit" form="loginForm" @click="initiateLogin">Login</v-btn>
-      </v-layout>
-    </v-flex>
-  </v-form>
-</div>
-  
+  <v-container fill-height >
+    <v-layout align-center justify-center >
+      <v-flex xs12 sm6 md6 class="text-xs-center"  style="padding : 20px; box-shadow : 0px 4px 50px -10px #1E88E5 !important; border-radius : 8px;">
+        <p class="headline font-weight-bold blue-grey--text text--darken-3">WorkChat</p>
+        <v-form id="loginForm" @submit.prevent="initiateLogin">
+          <v-text-field
+            v-model="name"
+            label="Nickname"
+            required
+          ></v-text-field>
+          <v-text-field
+              v-model="password"
+              :rules="[rules.required, rules.min]"
+              :type="show ? 'text' : 'password'"
+              name="input-10-1"
+              label="Password"
+              @click:append="show = !show"
+          ></v-text-field>
+              <v-btn @click="initiateRegistration">Register</v-btn>
+              <v-btn type="submit" form="loginForm" @click="initiateLogin">Login</v-btn>
+        </v-form>
+      </v-flex>        
+    </v-layout>
+</v-container>
 </template>
 
 <script>
@@ -64,3 +64,5 @@ export default {
   }
 }
 </script>
+<style>
+</style>

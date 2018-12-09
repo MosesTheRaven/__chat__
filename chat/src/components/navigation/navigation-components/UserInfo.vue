@@ -1,5 +1,5 @@
 <template>
-    <v-list-tile avatar class="py-3 primary">
+    <v-list-tile avatar class="py-3 primary" style="margin-bottom : 4px">
         <v-list-tile-avatar>
             <v-avatar class="white">
                 <v-icon class="blue--text text--darken-3">account_circle</v-icon>

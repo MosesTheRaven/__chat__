@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <Navigation/>
-    <Content/>
-    <v-footer fixed app >
+    <Navigation @emitMobileDrawerChange="drawer=false" :drawer="drawer"/>
+    <Content @emitToApp="switchDrawer"/>
+    <v-footer v-if="!this.$mq === 'sm'" fixed app >
       <v-layout justify-center>
         <span class="text-xs-center">&copy; 2018 <br>In memoriam <i><b>Adam</b></i></span>
       </v-layout>
@@ -26,7 +26,7 @@ export default {
 },
   data () {
     return {
-      drawer : true
+      drawer : false
     }
   },
   methods : {

@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <Login v-if="!isLoggedIn"/>
-    <Chat v-else/>
+    <Chat v-else @emitToContent="emitToApp"/>
   </v-content>
 </template>
 
@@ -33,7 +33,10 @@ export default {
     // })
   },
   methods : {
-    ...mapActions(['logout', 'returnedUserLogin'])
+    ...mapActions(['logout', 'returnedUserLogin']),
+    emitToApp(){
+      this.$emit('emitToApp')
+    }
   }
 }
 </script>

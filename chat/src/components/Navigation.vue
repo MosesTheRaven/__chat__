@@ -1,7 +1,7 @@
 <template>
     <div v-if="isLoggedIn">
-        <Toolbar @clicked="openRightDrawer"/>
-        <NavigationDrawer :opened="openedRightDrawer" @closed="setClosed"/>
+        <Toolbar v-if="this.$mq !== 'sm'" @clicked="openRightDrawer"/>
+        <NavigationDrawer :opened="openedRightDrawer || drawer" @closed="setClosed"/>
     </div>    
 </template>
 
@@ -21,6 +21,7 @@ export default {
         },
         setClosed(){
             this.openedRightDrawer = false
+            this.$emit('emitMobileDrawerChange')
         }
     },
     computed : {
@@ -29,11 +30,13 @@ export default {
     data() {
         return {
             openedRightDrawer : null,
+            mobileOpenedRightDrawer : null
         }
     },
     created() {
         this.openedRightDrawer =  this.$mq === 'sm' ? null : true
-       
+        console.log(this.$mq === 'sm')
     },
+    props : ['drawer']
 }
 </script>

@@ -11,7 +11,6 @@
                 </span>
                 <p class="message-content">{{message.content}}</p>
             </v-flex>
-            
         </li>
     </ul>
 </template>
@@ -93,9 +92,18 @@ export default {
 <style>
     .messages {
         padding-left : 10px;
-        max-height: 70vh;
         overflow: auto;
         list-style-type: none;
+    }
+    @media screen and (max-width: 769px){
+        .messages {
+            max-height: calc(100vh - 180px)
+        }
+    }
+    @media screen and (min-width: 769px){
+        .messages {
+            max-height: calc(100vh - 240px)
+        }
     }
     .message-sender-avatar{
         margin-top : -5px;

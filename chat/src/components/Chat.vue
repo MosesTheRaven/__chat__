@@ -1,6 +1,6 @@
 <template>
-    <v-layout column>
-        <ChatHeading/>
+    <v-layout column style="height : 100%">
+        <ChatHeading @emitLeftDrawer="emitToContent"/>
         <ChatWindow/> 
         <NewMessage/>
     </v-layout>
@@ -28,7 +28,17 @@ export default {
       message : "Hello, "
   }),
   methods:{
+      emitToContent(){
+          this.$emit('emitToContent')
+      }
       
+  },
+  created(){
+    console.log('im scrollllli')
+    window.scrollTo({
+        top: 100,  
+        behavior: 'smooth'
+    })
   }
 }
 </script>

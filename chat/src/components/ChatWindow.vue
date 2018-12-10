@@ -58,16 +58,16 @@ export default {
     }
     .messages strong{
         font-size: 1.1em;
-        color : whitesmoke;
+        color : #212121;
     }
 
     .messages::-webkit-scrollbar{
         width : 3px;
     }
     .messages::-webkit-scrollbar-track{
-        background : white;
+        background : #424242;
     }   
     .messages::-webkit-scrollbar-thumb{
-        background : gray;
+        background : #959595;
     } 
 </style>

@@ -1,7 +1,6 @@
 <template>
     <v-toolbar
-      color="blue-grey"
-      dark
+      color="#0097a7"
       fixed
       app
       clipped-right
@@ -9,7 +8,7 @@
         <v-toolbar-side-icon @click.stop="clicked">
             <i class="fas fa-bars" ></i>
         </v-toolbar-side-icon>
-        <v-toolbar-title>Toolbar</v-toolbar-title>
+        <v-toolbar-title>Work Chat</v-toolbar-title>
         <v-spacer></v-spacer>
     </v-toolbar>    
 </template>

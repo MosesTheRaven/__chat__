@@ -2,12 +2,12 @@
     <div>
         <v-navigation-drawer fixed v-model="opened" app>
             <v-list >
-                <v-list-group value="true" class="navigation-drawer-components">
+                <!-- <v-list-group value="true" class="navigation-drawer-components"> -->
                     <UserInfo/>
                     <Conversations/>
                     <Channels/>
                     <Projects/>
-                </v-list-group>
+                <!-- </v-list-group> -->
             </v-list>
             
         </v-navigation-drawer>

@@ -1,18 +1,23 @@
 <template>
-        <v-list-group value="true" no-action sub-group>
-            <v-list-tile slot="activator">
-                <v-list-tile>
-                    <v-list-tile-title>
-                        <span class="title">
-                            Conversations
-                        </span>
-                    </v-list-tile-title>
-                </v-list-tile>
+    <v-list-group :class="active" v-model="opened">
+        <v-list-tile ripple slot="activator">
+            <v-list-tile>
+                <v-list-tile-title>
+                    <span class="title">
+                        Conversations
+                    </span>
+                </v-list-tile-title>
             </v-list-tile>
-            <v-list-tile v-for="(conversation, i) in getUsers" :key="i" @click="console.log('clicked')">
-                <v-list-tile-title v-text="conversation.name"></v-list-tile-title>
-            </v-list-tile>
-        </v-list-group>
+        </v-list-tile>
+        <v-list-tile v-for="(conversation, i) in getConversations" :key="i" ripple @click="changeConversation(conversation)">
+            <v-list-tile-action>
+                <v-avatar>
+                    <v-icon dark>message</v-icon>
+                </v-avatar>
+            </v-list-tile-action>
+            <v-list-tile-title v-text="conversation.name" ></v-list-tile-title>
+        </v-list-tile>
+    </v-list-group>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
@@ -21,17 +26,29 @@ export default {
     name : 'Conversations',
     data(){
         return {
-            conversations : ['Users loading']
+            conversations : ['Conversations loading'],
+            opened : true,
+            active : 'secondary'
         }
     },
     computed: {
-        ...mapGetters(['getUsers'])
+        ...mapGetters(['getConversations', 'getUserData'])
     },
     methods: {
-        ...mapActions(['retrieveUsers'])
+        ...mapActions(['retrieveConversations', 'setNewCurrentConversation']),
+
+        changeConversation(conversation){
+            this.setNewCurrentConversation(conversation)
+        },
     },
     created(){
-        this.retrieveUsers()
-    }
+        this.retrieveConversations(this.getUserData.uid)
+    },
+    watch : {
+        opened : function(){
+            if(this.opened) this.active = 'secondary'
+            else this.active = 'primary' 
+        }
+    },
 }
 </script>

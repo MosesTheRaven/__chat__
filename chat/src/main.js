@@ -6,8 +6,17 @@ import App from './App.vue'
 import firebase from 'firebase'
 import store from './store/index'
 import VueChatScroll from 'vue-chat-scroll'
- 
+import 'material-design-icons-iconfont/dist/material-design-icons.css' // Ensure you are using css-loader
+import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
+import VueMq from 'vue-mq'
 
+Vue.use(VueMq, {
+  breakpoints: {
+    sm: 450,
+    md: 1250,
+    lg: Infinity,
+  }
+})
 Vue.use(VueChatScroll)
 
 Vue.config.productionTip = false

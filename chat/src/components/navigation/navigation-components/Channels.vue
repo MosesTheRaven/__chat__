@@ -9,7 +9,7 @@
                 </v-list-tile-title>
             </v-list-tile>
         </v-list-tile>
-        <v-list-tile v-for="(channel, i) in channels" :key="i" @click="">
+        <v-list-tile v-for="(channel, i) in channels" :key="i" @click="console.log('nothing')">
             <v-list-tile-title v-text="channel"></v-list-tile-title>
         </v-list-tile>
     </v-list-group>

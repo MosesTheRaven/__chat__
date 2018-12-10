@@ -1,13 +1,16 @@
 <template>
-    <v-list-tile>
+    <v-list-tile avatar class="py-3 primary" style="margin-bottom : 4px">
         <v-list-tile-avatar>
-            <v-avatar>
-                <i class="fas fa-user"></i>
+            <v-avatar class="white">
+                <v-icon class="blue--text text--darken-3">account_circle</v-icon>
             </v-avatar>
         </v-list-tile-avatar>
-        <v-list-tile-title class="username-heading">
+        <v-list-tile-title class="title font-weight-black">
             {{ username }}
         </v-list-tile-title>
+        <v-list-tile-content ripple class="px-2">
+            <v-icon>settings</v-icon>
+        </v-list-tile-content>
     </v-list-tile>    
 </template>
 
@@ -34,8 +37,4 @@ export default {
 }
 </script>
 <style>
-    .username-heading{
-        font-size : 1.2em;
-        font-weight: 700;
-    }
 </style>

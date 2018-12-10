@@ -1,38 +1,45 @@
 <template>
   <v-app>
-    <Navigation/>
-    <v-content>
-      <v-container fluid fill-height>
-        <v-layout justify-center align-center>
-          <v-flex>
-            <HelloWorld/>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-content>
-    <v-footer fixed app>
+    <Navigation @emitMobileDrawerChange="drawer=false" :drawer="drawer"/>
+    <Content @emitToApp="switchDrawer"/>
+    <Notification/>
+    <v-footer v-if="!this.$mq === 'sm'" fixed app >
       <v-layout justify-center>
-        <span class="text-xs-center">&copy; 2018 <br>In memoriam <i><b>Adam</b></i> </span>
+        <span class="text-xs-center">&copy; 2018 <br>In memoriam <i><b>Adam</b></i></span>
       </v-layout>
     </v-footer>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import Content from './components/Content'
 import Chat from './components/Chat'
 import Navigation from './components/Navigation'
+import Toolbar from './components/Toolbar'
+import Notification from './components/notifications/Notification'
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    Content,
     Chat,
-    Navigation
+    Navigation,
+    Toolbar,
+    Notification
 },
   data () {
     return {
+      drawer : false
     }
+  },
+  methods : {
+    switchDrawer(){
+      this.drawer = !this.drawer
+    }
+  },
+  created(){
+    
   }
 }
 </script>

@@ -1,14 +1,9 @@
 <template>
-    <v-toolbar
-      color="#0097a7"
-      fixed
-      app
-      clipped-right
-    >
-        <v-toolbar-side-icon @click.stop="clicked">
+    <v-toolbar color="secondary" dark fixed app clipped-left>
+        <v-toolbar-side-icon @click.stop="clicked" >
             <i class="fas fa-bars" ></i>
         </v-toolbar-side-icon>
-        <v-toolbar-title>Work Chat</v-toolbar-title>
+        <v-toolbar-title class="text-white">Work Chat</v-toolbar-title>
         <v-spacer></v-spacer>
     </v-toolbar>    
 </template>
@@ -18,7 +13,6 @@ export default {
     name : 'Toolbar',
     data(){
         return {
-            drawer : false
         }
     },
     methods : {
@@ -30,3 +24,5 @@ export default {
 }    
 </script>
 
+<style scoped>
+</style>

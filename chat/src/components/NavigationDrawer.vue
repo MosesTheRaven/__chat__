@@ -1,17 +1,14 @@
 <template>
-    <div>
-        <v-navigation-drawer fixed v-model="opened" app>
-            <v-list >
-                <!-- <v-list-group value="true" class="navigation-drawer-components"> -->
-                    <UserInfo/>
-                    <Conversations/>
-                    <Channels/>
-                    <Projects/>
-                <!-- </v-list-group> -->
-            </v-list>
-            
-        </v-navigation-drawer>
-    </div>
+    <v-navigation-drawer dark class="blue-grey darken-2"  clipped app v-model="opened">
+        <v-list dense>
+            <!-- <v-list-group value="true" class="navigation-drawer-components"> -->
+                <UserInfo/>
+                <Conversations/>
+                <Projects/>
+                <NewConversationDialog/>
+            <!-- </v-list-group> -->
+        </v-list>
+    </v-navigation-drawer>
 </template>
 
 <script>
@@ -19,6 +16,8 @@ import Conversations from './navigation/navigation-components/Conversations'
 import UserInfo from './navigation/navigation-components/UserInfo'
 import Channels from './navigation/navigation-components/Channels'
 import Projects from './navigation/navigation-components/Projects'
+import NewConversationDialog from './navigation/navigation-components/NewConversationDialog'
+
 
 export default {
     name : 'NavigationDrawer',
@@ -26,16 +25,14 @@ export default {
         UserInfo,
         Conversations,
         Channels,
-        Projects
+        Projects,
+        NewConversationDialog
     },
-    data() {
-        return {
-            // - use this to open/close the temporary drawer
-            left : false,
-            openSettings : false,
-            content : '0'
-            
+    data(){
+        return{
         }
+    },
+    methods : {
     },
     props : ['opened']
 }

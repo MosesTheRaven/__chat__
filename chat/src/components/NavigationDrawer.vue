@@ -1,8 +1,8 @@
 <template>
     <v-navigation-drawer dark class="blue-grey darken-2"  clipped app v-model="opened">
+        <UserInfo/>
         <v-list dense>
             <!-- <v-list-group value="true" class="navigation-drawer-components"> -->
-                <UserInfo/>
                 <Conversations/>
                 <Projects/>
                 <NewConversationDialog/>

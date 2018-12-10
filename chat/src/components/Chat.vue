@@ -1,8 +1,10 @@
 <template>
     <v-layout column style="height : 100%">
-        <ChatHeading @emitLeftDrawer="emitToContent"/>
+        <!-- <ChatHeading @emitLeftDrawer="emitToContent"/> -->
+        <ImprovedChatHeading @emitLeftDrawer="emitToContent" @emitRightDrawer="toggleRightDrawer" />
         <ChatWindow/> 
         <NewMessage/>
+        <ChatDrawer :rightDrawer="rightDrawerController"/>
     </v-layout>
 </template>
 
@@ -13,25 +15,31 @@ import { mapGetters } from 'vuex'
 import NewMessage from './NewMessage'
 import ChatWindow from './ChatWindow'
 import ChatHeading from './ChatHeading'
+import ImprovedChatHeading from './ImprovedChatHeading'
+import ChatDrawer from './ChatDrawer'
 
 export default {
   name : 'Chat',
   components : {
       NewMessage,
       ChatWindow,
-      ChatHeading
+      ChatHeading,
+      ImprovedChatHeading,
+      ChatDrawer
   },
   computed: {
     ...mapGetters(['getUserData'])
   },
   data: () => ({
-      message : "Hello, "
+      rightDrawerController : null
   }),
   methods:{
       emitToContent(){
           this.$emit('emitToContent')
+      },
+      toggleRightDrawer(){
+          this.rightDrawerController = !this.rightDrawerController
       }
-      
   },
   created(){
     window.scrollTo({

@@ -34,7 +34,11 @@ export default {
         ...mapGetters(['getProjects'])
     },
     methods : {
-         ...mapActions(['retrieveConversations', 'setNewCurrentConversation']),
+         ...mapActions(['setNewCurrentConversation']),
+
+         changeConversation(conversation){
+            this.setNewCurrentConversation(conversation)
+        },
 
     },
     watch : {

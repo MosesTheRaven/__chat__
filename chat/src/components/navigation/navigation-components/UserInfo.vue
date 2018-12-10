@@ -1,5 +1,17 @@
 <template>
-    <v-list-tile avatar class="py-3 primary" style="margin-bottom : 4px">
+    <v-toolbar class="py-3 primary" :extended="getCurrentProjectConversation">
+        <v-toolbar-side-icon>
+            <v-avatar color="secondary" class="ml-2">
+                <v-icon class="white--text">account_circle</v-icon>
+            </v-avatar>
+        </v-toolbar-side-icon>
+        <v-toolbar-title class="px-3">{{ username }}</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon>
+            <v-icon>settings</v-icon>
+        </v-btn>
+    </v-toolbar>
+    <!-- <v-list-tile avatar class="py-3 primary">
         <v-list-tile-avatar>
             <v-avatar class="white">
                 <v-icon class="blue--text text--darken-3">account_circle</v-icon>
@@ -11,7 +23,7 @@
         <v-list-tile-content ripple class="px-2">
             <v-icon>settings</v-icon>
         </v-list-tile-content>
-    </v-list-tile>    
+    </v-list-tile>     -->
 </template>
 
 <script>

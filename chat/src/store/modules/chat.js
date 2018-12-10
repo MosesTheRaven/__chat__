@@ -7,6 +7,7 @@ const state = {
   projects : [],
   currentConversation : 'Global chatroom',
   currentConversationUsers : 'all',
+  projectConversation : false
 }
   
   const getters = {
@@ -25,6 +26,10 @@ const state = {
     getCurrentConversationUsers : () => {
       return state.currentConversationUsers
     },
+    getCurrentProjectConversation : () => {
+      return state.projectConversation
+    },
+    
   }
   
   const mutations = {
@@ -46,7 +51,11 @@ const state = {
     },
     setCurrentConversationUsers : (state, newCurrentConversationUsers) => {
       state.currentConversationUsers = newCurrentConversationUsers
+    },
+    setCurrentProjectConversation : (state, newCurrentProjectConversation) => {
+      state.projectConversation = newCurrentProjectConversation
     }
+
   }
 
   const actions = {
@@ -72,6 +81,7 @@ const state = {
     setNewCurrentConversation: ({commit}, newCurrentConversation)=>{
       commit('setCurrentConversation', newCurrentConversation.name)
       commit('setCurrentConversationUsers', newCurrentConversation.selectedUsers.length)
+      commit('setCurrentProjectConversation', newCurrentConversation.project)
       
     }
   }

@@ -4,6 +4,7 @@ import userAuth from '../modules/userAuth'
 const state = {
   users : {},
   conversations : [],
+  projects : [],
   currentConversation : 'Global chatroom',
   currentConversationUsers : 'all',
 }
@@ -14,6 +15,9 @@ const state = {
     },
     getConversations : (state) => {
       return state.conversations
+    },
+    getProjects : (state) => {
+      return state.projects
     },
     getCurrentConversation : () => {
       return state.currentConversation
@@ -29,7 +33,12 @@ const state = {
     },
     addConversation : (state, newConversation) => {
       let conversations = state.conversations
-      conversations.push(newConversation)
+      let projects = state.projects
+
+      if(newConversation.project) projects.push(newConversation)
+      else conversations.push(newConversation)
+
+      state.projects = projects
       state.conversations = conversations
     },
     setCurrentConversation : (state, newCurrentConversation) => {

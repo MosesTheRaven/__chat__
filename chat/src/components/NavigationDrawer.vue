@@ -4,9 +4,8 @@
             <!-- <v-list-group value="true" class="navigation-drawer-components"> -->
                 <UserInfo/>
                 <Conversations/>
-                <!-- <Channels/> -->
                 <Projects/>
-                
+                <NewConversationDialog/>
             <!-- </v-list-group> -->
         </v-list>
     </v-navigation-drawer>
@@ -17,6 +16,8 @@ import Conversations from './navigation/navigation-components/Conversations'
 import UserInfo from './navigation/navigation-components/UserInfo'
 import Channels from './navigation/navigation-components/Channels'
 import Projects from './navigation/navigation-components/Projects'
+import NewConversationDialog from './navigation/navigation-components/NewConversationDialog'
+
 
 export default {
     name : 'NavigationDrawer',
@@ -24,13 +25,14 @@ export default {
         UserInfo,
         Conversations,
         Channels,
-        Projects
+        Projects,
+        NewConversationDialog
     },
-
-    watch : {
-        opened : function(){
-            if(!this.opened) this.$emit('closed')
+    data(){
+        return{
         }
+    },
+    methods : {
     },
     props : ['opened']
 }

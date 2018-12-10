@@ -34,7 +34,6 @@ export default {
       
   },
   created(){
-    console.log('im scrollllli')
     window.scrollTo({
         top: 100,  
         behavior: 'smooth'

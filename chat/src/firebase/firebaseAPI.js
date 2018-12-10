@@ -26,10 +26,10 @@ const FirebaseAPI = {
                 uid : data.user.uid,
                 name : loginData.name,
                 conversations : {
-                    '-LTIJX_T8R1R_dAXXWc5' : true
+                    '-LTKBaOMrTGddGs7OyVv' : true
                 }
             })
-            .then(firebase.database().ref('conversation/-LTIJX_T8R1R_dAXXWc5/selectedUsers').push(data.user.uid)
+            .then(firebase.database().ref('conversation/-LTKBaOMrTGddGs7OyVv/selectedUsers').push(data.user.uid)
             )
             //oboznamenie uzivatela o vysledku pridavania uzivatela1
             .then(()=>processFn({type: 'success', message: "Successfully registered. You can now log in"}))

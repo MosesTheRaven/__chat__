@@ -75,7 +75,7 @@ const actions = {
   },
   register : ({dispatch}, registrationData)=>{
     FirebaseAPI.createUser(registrationData, (retData)=>{
-      dispatch('sendNotification', retData.message)
+      dispatch('sendNotification', 'There was a problem with registration')
     })
   },
 }

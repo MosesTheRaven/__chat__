@@ -35,7 +35,6 @@ export default {
     },
     created() {
         this.openedRightDrawer =  this.$mq === 'sm' ? null : true
-        console.log(this.$mq === 'sm')
     },
     props : ['drawer']
 }

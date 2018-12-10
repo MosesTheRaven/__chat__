@@ -2,7 +2,7 @@
     <v-snackbar v-model="snackbar">
       {{ getNotification }}
       <v-btn
-        color="pink"
+        style="color : #d25d19 !important"
         flat
         @click="snackbar = false"
       >

@@ -1,12 +1,15 @@
 <template>
     <v-toolbar color="secondary" dark fixed app clipped-left>
-        <v-toolbar-side-icon @click.stop="clickedLeft">
+        <v-toolbar-side-icon v-if="this.$mq == 'sm'" @click.stop="clickedLeft">
+            <i class="fas fa-arrow-left" ></i>
+        </v-toolbar-side-icon>
+        <v-toolbar-side-icon v-else @click.stop="clickedLeft">
             <i class="fas fa-bars" ></i>
         </v-toolbar-side-icon>
         <v-toolbar-title class="text-white">{{ this.$mq !== 'sm' ? 'WorkChat' : getCurrentConversation }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-side-icon v-if="this.$mq == 'sm'"  @click.stop="clickedRight">
-            <i class="fas fa-bars" ></i>
+            <i class="fas fa-ellipsis-v" ></i>
         </v-toolbar-side-icon>
     </v-toolbar>    
 </template>

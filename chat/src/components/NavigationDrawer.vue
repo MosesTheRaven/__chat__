@@ -3,8 +3,26 @@
         <UserInfo/>
         <v-list dense>
             <!-- <v-list-group value="true" class="navigation-drawer-components"> -->
+                <!-- <v-subheader>Conversations</v-subheader> -->
                 <Conversations/>
+                <v-divider></v-divider>
+                <!-- <v-subheader>Conversations</v-subheader> -->
                 <Projects/>
+                <v-divider></v-divider>
+                <v-spacer></v-spacer>
+                <!-- <v-tooltip bottom>
+                    <v-btn
+                        slot="activator"
+                        style="margin-top : 16px"
+                        small
+                        color="secondary"
+                        @click="dialog = !dialog"
+                    >
+                        <v-icon>add</v-icon>
+                    </v-btn>    
+                    <span>Start a new conversation or project</span>
+                </v-tooltip>
+                 -->
                 <NewConversationDialog/>
             <!-- </v-list-group> -->
         </v-list>

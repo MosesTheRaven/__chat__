@@ -3,19 +3,26 @@
         <v-list-tile ripple slot="activator">
             <v-list-tile>
                 <v-list-tile-title>
-                    <span class="title">
+                    <span :class="active ==='primary' ? 'title font-weight-light' : 'title font-weight-medium' ">
                         Projects
                     </span>
                 </v-list-tile-title>
             </v-list-tile>
         </v-list-tile>
-        <v-list-tile v-for="(conversation, i) in getProjects" :key="i" ripple @click="changeConversation(conversation)">
+        <v-list-tile 
+            :class="getCurrentConversation == conversation.name ? 'secondary' : 'primary darken-2'" 
+            v-for="(conversation, i) in getProjects" :key="i" 
+            ripple 
+            @click="changeConversation(conversation)">
             <v-list-tile-action>
                 <v-avatar>
                     <v-icon dark>message</v-icon>
                 </v-avatar>
             </v-list-tile-action>
-            <v-list-tile-title v-text="conversation.name" ></v-list-tile-title>
+            <v-list-tile-title 
+                :class="getCurrentConversation == conversation.name ? 'font-weight-bold' : 'font-weight-light'" 
+                v-text="conversation.name">
+            </v-list-tile-title>
         </v-list-tile>
     </v-list-group>
 </template>
@@ -31,7 +38,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getProjects'])
+        ...mapGetters(['getProjects', 'getCurrentConversation'])
     },
     methods : {
          ...mapActions(['setNewCurrentConversation']),
@@ -43,7 +50,7 @@ export default {
     },
     watch : {
         opened : function(){
-            if(this.opened) this.active = 'secondary'
+            if(this.opened) this.active = 'primary darken-2'
             else this.active = 'primary' 
         }
     },

@@ -15,9 +15,9 @@
         </v-toolbar-side-icon>
         <v-toolbar-title class="px-4">{{ getCurrentConversation }}</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon @clicked.stop="toggleRightDrawer">
+        <!-- <v-btn icon @clicked.stop="toggleRightDrawer">
             <i class="fas fa-bars" ></i>
-        </v-btn>
+        </v-btn> -->
         
     </v-toolbar>
 </template>

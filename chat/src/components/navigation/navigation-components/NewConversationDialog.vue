@@ -5,7 +5,10 @@
         <i class="fas fa-plus"></i>
       </v-avatar>
     </v-list-tile-action>
-    <v-list-tile-title v-text="buttonString"></v-list-tile-title>
+    <v-list-tile-text>
+      Start new ...
+    </v-list-tile-text>
+      
       <v-dialog v-model="dialog" persistent max-width="600px">
        <v-card light>
         <v-card-title class="blue darken-2 white--text">

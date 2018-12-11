@@ -1,10 +1,14 @@
 <template>
     <v-layout column style="height : 100%">
         <!-- <ChatHeading @emitLeftDrawer="emitToContent"/> -->
-        <ImprovedChatHeading @emitLeftDrawer="emitToContent" @emitRightDrawer="toggleRightDrawer" />
+        <ImprovedChatHeading v-if="this.$mq !== 'sm'" @emitLeftDrawer="emitToContent" @emitRightDrawer="toggleRightDrawer" />
         <ChatWindow/> 
         <NewMessage/>
-        <ChatDrawer :rightDrawer="rightDrawerController"/>
+        <ChatDrawer
+            v-if="this.$mq !== 'sm'"
+            :rightDrawerVar="rightDrawerVar" @setRightDrawerVar="newValue => rightDrawerVar=newValue"
+        />
+        
     </v-layout>
 </template>
 
@@ -17,6 +21,8 @@ import ChatWindow from './ChatWindow'
 import ChatHeading from './ChatHeading'
 import ImprovedChatHeading from './ImprovedChatHeading'
 import ChatDrawer from './ChatDrawer'
+
+
 
 export default {
   name : 'Chat',
@@ -31,21 +37,19 @@ export default {
     ...mapGetters(['getUserData'])
   },
   data: () => ({
-      rightDrawerController : null
+      rightDrawerVar : this.$mq == 'sm' ? null : false
   }),
-  methods:{
-      emitToContent(){
-          this.$emit('emitToContent')
-      },
-      toggleRightDrawer(){
-          this.rightDrawerController = !this.rightDrawerController
-      }
-  },
+    methods : {
+        toggleRightDrawer(){
+            this.rightDrawerVar = !this.rightDrawerVar
+        }
+    },
   created(){
     window.scrollTo({
         top: 100,  
         behavior: 'smooth'
     })
   }
+  
 }
 </script>

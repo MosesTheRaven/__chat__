@@ -15,17 +15,20 @@
         </v-toolbar-side-icon>
         <v-toolbar-title class="px-4">{{ getCurrentConversation }}</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon>
+        <v-btn icon @clicked.stop="toggleRightDrawer">
             <i class="fas fa-bars" ></i>
         </v-btn>
+        
     </v-toolbar>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
 
+
 export default{
     name : 'ImprovedChatHeading',
+    
     data() {
         return {
             conversation : {
@@ -39,7 +42,7 @@ export default{
     },
     methods : {
         emitToChat(){
-            this.$emit('emitLeftDrawer')
+            this.$emit('clickedRight')
         }
     }
 }

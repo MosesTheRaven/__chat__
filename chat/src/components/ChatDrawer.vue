@@ -1,10 +1,10 @@
 <template>
-    <v-navigation-drawer
-      v-model="resolveRightDrawer"
-      absolute
-      temporary
-      right
-    >
+    <v-navigation-drawer v-model="rightDrawer" app clipped right>
+      <v-toolbar class="py-3">
+        <v-toolbar-title>
+          Conversation Information
+        </v-toolbar-title>
+      </v-toolbar>
       <v-list class="pa-1">
         <v-list-tile avatar>
           <v-list-tile-avatar>
@@ -22,20 +22,19 @@
 <script>
   export default {
     name : 'ChatDrawer',
-    data () {
-      return {
-        resolveRightDrawer : null,
-        items: [
-          { title: 'Home', icon: 'dashboard' },
-          { title: 'About', icon: 'question_answer' }
-        ]
-      }
+    data(){
+        return{
+            rightDrawer : this.$mq !== 'sm' ? null : false
+        }
     },
     watch : {
-      rightDrawer : function(){
-        this.resolveRightDrawer = this.rightDrawer
-      }
+        rightDrawerVar : function(){
+            this.rightDrawer = this.rightDrawerVar
+        },
+        rightDrawer : function(){
+            this.$emit('setRightDrawerVar', this.rightDrawer)
+        }
     },
-    props : ['rightDrawer']
+    props : ['rightDrawerVar']
   }
 </script>

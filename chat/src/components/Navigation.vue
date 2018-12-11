@@ -1,41 +1,52 @@
 <template>
     <div v-if="isLoggedIn">
-        <Toolbar v-if="this.$mq !== 'sm'" @clicked="openRightDrawer"/>
-        <NavigationDrawer :opened="openedRightDrawer || drawer" @closed="setClosed"/>
+        <Toolbar 
+            @clickedLeft="toggleLeftDrawer"
+            @clickedRight="toggleRightDrawer"
+        />
+        <NavigationDrawer  
+            :leftDrawerVar="leftDrawerVar" @setLeftDrawerVar="newValue => leftDrawerVar=newValue"
+        />
+        <ChatDrawer
+            v-if="this.$mq == 'sm'"
+            :rightDrawerVar="rightDrawerVar" @setRightDrawerVar="newValue => rightDrawerVar=newValue"
+        />
     </div>    
 </template>
 
 <script>
 import Toolbar from './Toolbar'
 import NavigationDrawer from './NavigationDrawer'
+import ChatDrawer from './ChatDrawer'
 import { mapGetters } from 'vuex'
+
 export default {
     name : 'Navigation',
     components: {
         Toolbar,
-        NavigationDrawer    
-    },
-    methods : {
-        openRightDrawer(){
-            this.openedRightDrawer = !this.openedRightDrawer
-        },
-        setClosed(){
-            this.openedRightDrawer = false
-            this.$emit('emitMobileDrawerChange')
-        }
+        NavigationDrawer,
+        ChatDrawer    
     },
     computed : {
         ...mapGetters(['isLoggedIn']),
     },
     data() {
         return {
-            openedRightDrawer : null,
-            mobileOpenedRightDrawer : null
+            leftDrawerVar : this.$mq !== 'sm' ? null : false,
+            rightDrawerVar : this.$mq !== 'sm' ? null : false
+            
         }
     },
-    created() {
-        this.openedRightDrawer =  this.$mq === 'sm' ? null : true
+    watch : {
+
     },
-    props : ['drawer']
+    methods : {
+        toggleLeftDrawer(){
+            this.leftDrawerVar = !this.leftDrawerVar
+        },
+        toggleRightDrawer(){
+            this.rightDrawerVar = !this.rightDrawerVar
+        }
+    }
 }
 </script>

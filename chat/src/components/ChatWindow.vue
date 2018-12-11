@@ -97,7 +97,7 @@ export default {
     }
     @media screen and (max-width: 769px){
         .messages {
-            max-height: calc(100vh - 180px)
+            max-height: calc(100vh - 150px)
         }
     }
     @media screen and (min-width: 769px){

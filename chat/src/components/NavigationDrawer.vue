@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer dark class="blue-grey darken-2"  clipped app v-model="opened">
+    <v-navigation-drawer dark class="blue-grey darken-2"  clipped app v-model="leftDrawer">
         <UserInfo/>
         <v-list dense>
             <!-- <v-list-group value="true" class="navigation-drawer-components"> -->
@@ -30,10 +30,17 @@ export default {
     },
     data(){
         return{
+            leftDrawer : this.$mq !== 'sm' ? null : false
         }
     },
-    methods : {
+    watch : {
+        leftDrawerVar : function(){
+            this.leftDrawer = this.leftDrawerVar
+        },
+        leftDrawer : function(){
+            this.$emit('setLeftDrawerVar', this.leftDrawer)
+        }
     },
-    props : ['opened']
+    props : ['leftDrawerVar']
 }
 </script>

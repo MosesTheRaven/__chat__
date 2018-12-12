@@ -37,9 +37,6 @@ export default {
             
         }
     },
-    watch : {
-
-    },
     methods : {
         toggleLeftDrawer(){
             this.leftDrawerVar = !this.leftDrawerVar

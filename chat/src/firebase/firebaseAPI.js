@@ -26,15 +26,15 @@ const FirebaseAPI = {
                 uid : data.user.uid,
                 name : loginData.name,
                 conversations : {
-                    '-LTKBaOMrTGddGs7OyVv' : true
+                    '-LTV53d2KK36x8ZrDwIk' : true
                 }
             })
-            .then(firebase.database().ref('conversation/-LTKBaOMrTGddGs7OyVv/selectedUsers').push(data.user.uid)
+            .then(firebase.database().ref('conversations/-LTV53d2KK36x8ZrDwIk/selectedUsers').push(data.user.uid)
             )
             //oboznamenie uzivatela o vysledku pridavania uzivatela1
             .then(()=>processFn({type: 'success', message: "Successfully registered. You can now log in"}))
         })
-        .catch((error)=>processFn({type: 'error', message: "There was a problem with registration" + error.message}))
+        .catch((error)=>processFn({type: 'error', message: "There was a problem with registration."}))
     },
     createNewConversation : (conv) =>{
         var newConversationRef = firebase.database().ref('conversations/').push(conv)
@@ -59,6 +59,12 @@ const FirebaseAPI = {
     },
     retrieveConversationInfo : (cid)=>{
         return firebase.database().ref('conversations/' + cid)
+    },
+    retrieveUser : (uid, processFn)=>{
+        firebase.database().ref('users/' + uid)
+        .on('value', (userDataSnapshot)=>{
+            processFn(userDataSnapshot.val())
+        })
     },
     
     firestore : {

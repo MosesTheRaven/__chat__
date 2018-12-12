@@ -5,9 +5,9 @@
         <i class="fas fa-plus"></i>
       </v-avatar>
     </v-list-tile-action>
-    <v-list-tile-text>
+    <v-list-tile-content>
       Start new ...
-    </v-list-tile-text>
+    </v-list-tile-content>
       
       <v-dialog v-model="dialog" persistent max-width="600px">
        <v-card light>
@@ -42,7 +42,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-            <v-btn color="blue darken-2" flat @click="dialog = false">Close</v-btn>
+            <v-btn color="blue darken-2" flat @click="discardDialog">Close</v-btn>
             <v-btn class="white--text" color="secondary darken-2"  @click="initiateNewConversationCreation">Save</v-btn>
         </v-card-actions>
       </v-card>
@@ -72,7 +72,7 @@ export default {
         ...mapGetters(['getUsers'])
     },
     methods : {
-        ...mapActions(['retrieveUsers', 'createNewConversation', 'sendNotification']),
+        ...mapActions(['retrieveUsers', 'createNewConversation', 'sendNotification', ]),
 
         initiateNewConversationCreation(){
 
@@ -80,6 +80,7 @@ export default {
             this.createNewConversation(this.conversation)
             this.users = []
             this.conversation = {}
+            this.conversation.selectedUsers = []
             this.dialog = false  
             this.sendNotification('Successfully created a new conversation')
           }
@@ -87,6 +88,13 @@ export default {
             this.sendNotification('There was a problem while creating a conversation')
           }
           
+        },
+        discardDialog(){
+            this.users = []
+            this.conversation = {}
+            this.conversation.selectedUsers = []
+            this.dialog = false  
+            
         },
         toggleDialog(){
           this.dialog = !this.dialog

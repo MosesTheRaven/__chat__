@@ -9,7 +9,7 @@
 import Login from './Login'
 import Chat from './Chat'
 import { mapGetters, mapActions } from 'vuex'
-import * as firebase from 'firebase'
+import FirebaseAPI from '../firebase/firebaseAPI'
 
 export default {
   name: 'Content',
@@ -20,22 +20,20 @@ export default {
     Login,
     Chat
   },
-  created(){
-    // this is the place to work on logged in users
-
-
-    // firebase.auth().onAuthStateChanged((user) => {
-    //   if(user){
-    //     this.returnedUserLogin(user)
-    //   }
-    //   else{
-    //   }
-    // })
-  },
   methods : {
-    ...mapActions(['logout', 'returnedUserLogin']),
+    ...mapActions(['logout', 'returnedUserLogin', 'setNewCurrentConversation']),
     emitToApp(){
       this.$emit('emitToApp')
+    }
+  },
+  watch : {
+    isLoggedIn: function(){
+      if(this.isLoggedIn){
+      FirebaseAPI.retrieveConversationInfo('-LTV53d2KK36x8ZrDwIk')
+        .on('value', (conversationInfo)=>{
+          this.setNewCurrentConversation(conversationInfo.val())
+        })
+      }
     }
   }
 }

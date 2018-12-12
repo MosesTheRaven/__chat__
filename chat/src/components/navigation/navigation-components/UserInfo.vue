@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar class="py-3 primary" :extended="getCurrentProjectConversation">
+    <v-toolbar class="py-3 primary">
         <v-toolbar-side-icon>
             <v-avatar color="secondary" class="ml-2">
                 <v-icon class="white--text">account_circle</v-icon>
@@ -33,9 +33,6 @@ export default {
     name : 'UserInfo',
     computed : {
         ...mapGetters(['getUserData'])
-    },
-    methods(){
-
     },
     data(){
         return {

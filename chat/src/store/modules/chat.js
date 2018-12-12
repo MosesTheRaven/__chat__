@@ -5,9 +5,10 @@ const state = {
   users : {},
   conversations : [],
   projects : [],
-  currentConversation : 'Global chatroom',
-  currentConversationUsers : 'all',
-  projectConversation : false
+  currentConversation : '', // name string
+  // currentConversationUsers : '',
+  projectConversation : null, // t/f 
+  currentConversationUsersObject : [] // conversation users
 }
   
   const getters = {
@@ -23,13 +24,15 @@ const state = {
     getCurrentConversation : () => {
       return state.currentConversation
     },
-    getCurrentConversationUsers : () => {
-      return state.currentConversationUsers
-    },
+    // getCurrentConversationUsers : () => {
+    //   return state.currentConversationUsers
+    // },
     getCurrentProjectConversation : () => {
       return state.projectConversation
     },
-    
+    getCurrentConversationUsersObject : () => {
+      return state.currentConversationUsersObject
+    },
   }
   
   const mutations = {
@@ -54,8 +57,13 @@ const state = {
     },
     setCurrentProjectConversation : (state, newCurrentProjectConversation) => {
       state.projectConversation = newCurrentProjectConversation
+    },
+    addUserToCurrentConversation : (state, newUser) => {
+      state.currentConversationUsersObject.push(newUser)
+    },
+    resetCurrentConversationUsers : (state) => {
+      state.currentConversationUsersObject.length = 0
     }
-
   }
 
   const actions = {
@@ -66,6 +74,9 @@ const state = {
       FirebaseAPI.retrieveUsers().on('value', (userDataSnapshot)=>{
         commit('setUsers', userDataSnapshot.val())
       })
+    },
+    retrieveUser : ({commit}, newUser) => {
+      FirebaseAPI.retrieveUser(newUser, (newUserObject)=>{commit('addUserToCurrentConversation', newUserObject)})
     },
     retrieveConversations : ({commit}, uid)=>{
       FirebaseAPI.retrieveConversations(uid).on('child_added', (conversationDataSnapshot)=>{
@@ -78,8 +89,10 @@ const state = {
     createNewConversation : ({commit}, newConversation)=>{
       return FirebaseAPI.createNewConversation(newConversation)
     },
-    setNewCurrentConversation: ({commit}, newCurrentConversation)=>{
+    setNewCurrentConversation: ({dispatch, commit}, newCurrentConversation)=>{
+      commit('resetCurrentConversationUsers')
       commit('setCurrentConversation', newCurrentConversation.name)
+      Object.entries(newCurrentConversation.selectedUsers).forEach(([key, value]) => dispatch('retrieveUser', value))
       commit('setCurrentConversationUsers', newCurrentConversation.selectedUsers.length)
       commit('setCurrentProjectConversation', newCurrentConversation.project)
       

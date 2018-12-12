@@ -35,6 +35,7 @@ export default {
         return {
             conversations : ['Conversations loading'],
             opened : true,
+            active : ''
         }
     },
     computed: {

@@ -1,7 +1,6 @@
 <template>
     <v-layout column style="height : 100%">
-        <!-- <ChatHeading @emitLeftDrawer="emitToContent"/> -->
-        <ImprovedChatHeading v-if="this.$mq !== 'sm'" @emitLeftDrawer="emitToContent" @emitRightDrawer="toggleRightDrawer" />
+        <ImprovedChatHeading v-if="this.$mq !== 'sm'"  />
         <ChatWindow/> 
         <NewMessage/>
         <ChatDrawer

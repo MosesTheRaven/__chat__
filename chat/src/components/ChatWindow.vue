@@ -34,58 +34,31 @@ export default {
     },
     watch :{
         getCurrentConversation : function(){
-            this.messages = []
-            let ref = FirebaseAPI.firestore.getCollection(this.getCurrentConversation)
-            // let newMessages = []
-            ref.onSnapshot((snapshot)=>{
-                snapshot.docChanges().forEach(change=>{
-                    if(change.type == "added"){
-                        let messageObject = {
-                            sender : {
-                                name : change.doc.data().name,
-                                uid : change.doc.data().uid
-                            },
-                            content : change.doc.data().content,
-                            timestamp : change.doc.data().timestamp
+            if(this.getCurrentConversation != ''){
+                this.messages = []
+                let ref = FirebaseAPI.firestore.getCollection(this.getCurrentConversation)
+                ref.onSnapshot((snapshot)=>{
+                    snapshot.docChanges().forEach(change=>{
+                        if(change.type == "added"){
+                            let messageObject = {
+                                sender : {
+                                    name : change.doc.data().name,
+                                    uid : change.doc.data().uid
+                                },
+                                content : change.doc.data().content,
+                                timestamp : change.doc.data().timestamp
+                            }
+                            var addMessageBool = true
+                            this.messages.forEach(iteratedMessage=>{
+                                if (iteratedMessage.timestamp == messageObject.timestamp) addMessageBool = false
+                            })
+                            if(addMessageBool) this.messages.push(messageObject)
                         }
-                        var addMessageBool = true
-                        this.messages.forEach(iteratedMessage=>{
-                            if (iteratedMessage.timestamp == messageObject.timestamp) addMessageBool = false
-                        })
-                        if(addMessageBool) this.messages.push(messageObject)
-                        // newMessages.push(messageObject)
-                    }
+                    })
                 })
-                // this.messages = newMessages
-            })
+            }
         }
     },
-    created(){
-        this.messages = []
-        let ref = FirebaseAPI.firestore.getCollection(this.getCurrentConversation)
-        // let newMessages = []
-        ref.onSnapshot((snapshot)=>{
-            snapshot.docChanges().forEach(change=>{
-                if(change.type == "added"){
-                    let messageObject = {
-                        sender : {
-                            name : change.doc.data().name,
-                            uid : change.doc.data().uid
-                        },
-                        content : change.doc.data().content,
-                        timestamp : change.doc.data().timestamp
-                    }
-                    var addMessageBool = true
-                    this.messages.forEach(iteratedMessage=>{
-                        if (iteratedMessage.timestamp == messageObject.timestamp) addMessageBool = false
-                    })
-                    if(addMessageBool) this.messages.push(messageObject)
-                    // newMessages.push(messageObject)
-                }
-            })
-            // this.messages = newMessages
-        })
-    }
 }
 </script>
 

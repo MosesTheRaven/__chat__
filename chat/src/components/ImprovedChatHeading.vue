@@ -26,7 +26,7 @@
 import {mapGetters} from 'vuex'
 
 
-export default{
+export default {
     name : 'ImprovedChatHeading',
     
     data() {

@@ -2,14 +2,19 @@
     <ul class="messages" v-chat-scroll>
         <p v-if="messages.length == 0">Conversation is loading</p>
         <li v-else v-for="(message, index) in messages" :key="index">
-            <v-flex row  class="py-1">
-                <v-avatar size="30" class="message-sender-avatar ">
-                    <v-icon>account_circle</v-icon>
-                </v-avatar>
-                <span class="message-sender">
-                        {{message.sender.name}}
-                </span>
-                <p class="message-content">{{message.content}}</p>
+            <v-flex row class="py-1">
+                <v-flex v-if="messages[index-1 < 0 ? 0 : index-1].sender.name != messages[index].sender.name" xs3>
+                    <v-avatar size="30" class="message-sender-avatar ">
+                        <v-icon>account_circle</v-icon>
+                    </v-avatar>
+                    <span class="message-sender">
+                            {{message.sender.name}}
+                    </span>
+                </v-flex>
+                <v-flex xs9>
+                    <p class="message-content">{{message.content}}</p>
+                    <span class="message-content" v-if="message.file"><a target="_blank" :href="message.file.path">Download</a></span>
+                </v-flex>
             </v-flex>
         </li>
     </ul>
@@ -47,6 +52,9 @@ export default {
                                 },
                                 content : change.doc.data().content,
                                 timestamp : change.doc.data().timestamp
+                            }
+                            if (change.doc.data().file){
+                                messageObject.file = change.doc.data().file
                             }
                             var addMessageBool = true
                             this.messages.forEach(iteratedMessage=>{
@@ -88,6 +96,7 @@ export default {
     }
     .message-content{
         padding-left : 33px;
+        margin-bottom : 0px;
     }
 
     .messages::-webkit-scrollbar{

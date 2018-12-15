@@ -27,23 +27,30 @@
                 <v-flex xs4 offset-xs2>
                   <v-card-title primary-title>
                     <div>
-                      <div class="headline">File name: <strong>file.pdf</strong></div>
+                      <div class="headline">File name: <strong>{{ file.name }}</strong></div>
                       <div>Autor: <strong>{{ getUserData.name }}</strong></div>
                       <div>
-                          <v-text-field label="File description" auto-grow v-model="fileDescription"></v-text-field>
+                          <input v-if="!fileUploaded" type="file" value="upload" id="fileButton" @change="(event)=>getFile(event)">
+                          <span color="error">{{ error }}</span>
+                          <v-text-field label="File description" auto-grow v-model="file.description"></v-text-field>
                       </div>
                     </div>
                   </v-card-title>
                 </v-flex>
-                <v-flex xs4 offset-xs2 class="display-4 py-4">
-                  <i class="far fa-file-pdf"></i>
+                <v-flex xs4 offset-xs2 class="py-4">
+                    <v-progress-circular v-if="!fileUploaded" :rotate="360" :size="100" :width="15" :value="fileUploadStatus" color="secondary">
+                        {{ fileUploadStatus }}
+                    </v-progress-circular>
+                    <span v-else class="display-4">
+                        <i :class="fileTypes[file.type]"></i>
+                    </span>
                 </v-flex>
               </v-layout>
               <v-divider light></v-divider>
               <v-card-actions class="pa-3">
                   <v-flex justify-end></v-flex>
                   <v-btn flat color="error" @click="discard">Discard</v-btn>
-                  <v-btn color="secondary" @click="specialSendMessage">Send</v-btn>
+                  <v-btn :disabled="!fileUploaded" color="secondary" @click="specialSendMessage">Send</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -52,7 +59,7 @@
     </v-flex>
 </template>
 <script>
-import * as FirebaseAPI from 'firebase'
+import * as firebase from 'firebase'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -74,7 +81,63 @@ export default {
                 'mdi-emoticon-tongue'
             ],
             bottomSheet: false,
-            fileDescription : ""
+            file : {
+                name : "",
+                description : "",
+                type : "",
+                path : ""
+            },
+            fileUploadStatus : 0,
+            error : "",
+            fileUploaded : false,
+            fileStorageRef : '',
+            fileTypes : {
+                '' : 'fas fa-file',
+
+                'zip' : 'fas fa-file-archive',
+                'rar' : 'fas fa-file-archive',
+                '7z' : 'fas fa-file-archive',
+                'gz' : 'fas fa-file-archive',
+
+                'pdf' : 'fas fa-file-pdf',
+
+                'pps' : 'fas fa-file-powerpoint',
+                'ppt' : 'fas fa-file-powerpoint',
+                'pptx' : 'fas fa-file-powerpoint',
+
+
+                'doc' : 'fas fa-file-word',
+                'docx' : 'fas fa-file-word',
+                'odt' : 'fas fa-file-alt',
+                'txt' : 'fas fa-file-alt',
+                
+                'bmp' : 'fas fa-file-image',
+                'dds' : 'fas fa-file-image',
+                'gif' : 'fas fa-file-image',
+                'jpg' : 'fas fa-file-image',
+                'png' : 'fas fa-file-image',
+                'psd' : 'fas fa-file-image',
+                'tga' : 'fas fa-file-image',
+                'thm' : 'fas fa-file-image',
+                'tif' : 'fas fa-file-image',
+                'tiff' : 'fas fa-file-image',
+                'yuv' : 'fas fa-file-image',
+
+                'xlr' : 'fas fa-file-excel',
+                'xls' : 'fas fa-file-excel',
+                'xlsx' : 'fas fa-file-excel',
+
+                'mp3' : 'fas fa-file-audio',
+                'wav' : 'fas fa-file-audio',
+                'midi' : 'fas fa-file-audio',
+                'wma' : 'fas fa-file-audio',
+                'flac' : 'fas fa-file-audio',
+                
+                'avi' : 'fas fa-file-video',
+                'mp4' : 'fas fa-file-video',
+                '3gp' : 'fas fa-file-video',
+   
+            }
         }
     },
     computed : {
@@ -85,7 +148,6 @@ export default {
     },
     methods: {
         ...mapActions(['sendMessage', 'sendNotification']),
-    
         initiateMessageSend() {
             if(this.message != ""){
                 var messageObject = {
@@ -114,13 +176,41 @@ export default {
         openBottomSheet(){
             this.bottomSheet = true;
         },
+        getFile(event){
+            var file = event.target.files[0]
+            this.file.name = file.name
+            this.file.type = this.file.name.split(".")[this.file.name.split(".").length - 1] 
+            this.fileStorageRef = firebase.storage().ref('conversations/' + this.getCurrentConversation + '/' + file.name)
+
+            var task = this.fileStorageRef.put(file) 
+
+
+            task.on('state_changed', (snapshot) => this.progress(snapshot), (err) => this.handleFileError(err), () => this.complete())
+
+        },
+        progress(snapshot){
+            this.fileUploadStatus = Math.ceil(100 * (snapshot.bytesTransferred / snapshot.totalBytes))      
+        },
+        handleFileError(err){
+            this.error = err.message
+        },
+        complete(){
+            this.fileStorageRef.getDownloadURL()
+            .then((url)=>{
+                this.file.path = url
+                this.fileUploaded = true;
+            })
+        },
         specialSendMessage(){
+            var fileMessage = 'uploaded ' + this.file.name
+            fileMessage += this.file.description === "" ? '' : ' with a description : ' + this.file.description
             var messageObject = {
-                    content : this.getUserData.name + ' uploaded file.pdf with a description : ' + this.fileDescription,
+                    content : fileMessage,
                     sender : {
                         name : this.getUserData.name,
                         uid : this.getUserData.uid 
                     },
+                    file : this.file,
                     collection : this.getCurrentConversation
                 }
             this.sendMessage(messageObject)

@@ -66,13 +66,13 @@ const FirebaseAPI = {
             processFn(userDataSnapshot.val())
         })
     },
-    
     firestore : {
         sendInitialMessage : (messageObject, collection)=>{
             firebase.firestore().collection(collection).add({
                 content : messageObject.content,
                 name: messageObject.name,
                 uid : messageObject.uid,
+                file : messageObject.file,
                 timestamp : Date.now()
             })
             .then((success)=>{
@@ -89,31 +89,59 @@ const FirebaseAPI = {
             })
         },
         sendMessage: (messageObject)=>{
-            firebase.firestore().collection(messageObject.collection).add({
-                content : messageObject.content,
-                name: messageObject.sender.name,
-                uid : messageObject.sender.uid,
-                timestamp : Date.now()
-            })
-            .then((success)=>{
-                return {
-                    type : 'success',
-                    message : success
-                }
-            })
-            .catch((error)=>{
-                return {
-                    type : 'error',
-                    message : error
-                }
-            })
+            if(messageObject.file){
+                firebase.firestore().collection(messageObject.collection).add({
+                    content : messageObject.content,
+                    name: messageObject.sender.name,
+                    uid : messageObject.sender.uid,
+                    file : messageObject.file,
+                    timestamp : Date.now()
+                })
+                .then((success)=>{
+                    return {
+                        type : 'success',
+                        message : success
+                    }
+                })
+                .catch((error)=>{
+                    return {
+                        type : 'error',
+                        message : error
+                    }
+                })
+            }
+            else{
+                firebase.firestore().collection(messageObject.collection).add({
+                    content : messageObject.content,
+                    name: messageObject.sender.name,
+                    uid : messageObject.sender.uid,
+                    timestamp : Date.now()
+                })
+                .then((success)=>{
+                    return {
+                        type : 'success',
+                        message : success
+                    }
+                })
+                .catch((error)=>{
+                    return {
+                        type : 'error',
+                        message : error
+                    }
+                })
+            }
+            
         },
         getCollection : (cid)=>{
             return firebase.firestore().collection(cid)
             .orderBy("timestamp", "asc")
         }
-    }
-
+    },
+    // storage : {
+    //     saveFile : (path)=>{
+    //         firebase.storage().ref(path)
+    //     }
+    // }
 }
 
 export default FirebaseAPI

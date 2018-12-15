@@ -18,7 +18,6 @@
         <!-- <v-btn icon @clicked.stop="toggleRightDrawer">
             <i class="fas fa-bars" ></i>
         </v-btn> -->
-        
     </v-toolbar>
 </template>
 

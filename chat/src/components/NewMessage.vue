@@ -136,18 +136,19 @@ export default {
                 'avi' : 'fas fa-file-video',
                 'mp4' : 'fas fa-file-video',
                 '3gp' : 'fas fa-file-video',
+                'mkv' : 'fas fa-file-video',
    
             }
         }
     },
     computed : {
-        ...mapGetters(['getUserData', 'getCurrentConversation']),
+        ...mapGetters(['getUserData', 'getCurrentConversation', 'getCurrentConversationId']),
         icon () {
             return this.icons[this.iconIndex]
         }
     },
     methods: {
-        ...mapActions(['sendMessage', 'sendNotification']),
+        ...mapActions(['sendMessage', 'sendNotification', 'registerFile']),
         initiateMessageSend() {
             if(this.message != ""){
                 var messageObject = {
@@ -213,7 +214,13 @@ export default {
                     file : this.file,
                     collection : this.getCurrentConversation
                 }
+            
             this.sendMessage(messageObject)
+            var fileObject = {
+                'messageObject' : messageObject,
+                'cid' : this.getCurrentConversationId
+            }
+            this.registerFile(fileObject)
             this.sendNotification('File sent')
             this.discard()
         },

@@ -6,9 +6,11 @@ const state = {
   conversations : [],
   projects : [],
   currentConversation : '', // name string
+  currentConversationId: '',
   // currentConversationUsers : '',
   projectConversation : null, // t/f 
-  currentConversationUsersObject : [] // conversation users
+  currentConversationUsersObject : [], // conversation users
+  currentConversationFiles : {}
 }
   
   const getters = {
@@ -33,6 +35,12 @@ const state = {
     getCurrentConversationUsersObject : () => {
       return state.currentConversationUsersObject
     },
+    getCurrentConversationId : ()=>{
+      return state.currentConversationId
+    },
+    getCurrentConversationFiles : ()=>{
+      return state.currentConversationFiles
+    }
   }
   
   const mutations = {
@@ -58,11 +66,17 @@ const state = {
     setCurrentProjectConversation : (state, newCurrentProjectConversation) => {
       state.projectConversation = newCurrentProjectConversation
     },
+    setCurrentConversationId : (state, newConversationId) =>{
+      state.currentConversationId = newConversationId
+    },
     addUserToCurrentConversation : (state, newUser) => {
       state.currentConversationUsersObject.push(newUser)
     },
     resetCurrentConversationUsers : (state) => {
       state.currentConversationUsersObject.length = 0
+    },
+    setCurrentConversationFiles : (state, newFiles) => {
+      state.currentConversationFiles = newFiles
     }
   }
 
@@ -90,12 +104,17 @@ const state = {
       return FirebaseAPI.createNewConversation(newConversation)
     },
     setNewCurrentConversation: ({dispatch, commit}, newCurrentConversation)=>{
+      commit('setCurrentConversationId', newCurrentConversation.cid)
+      commit('setCurrentConversationFiles', newCurrentConversation.files)
       commit('resetCurrentConversationUsers')
       commit('setCurrentConversation', newCurrentConversation.name)
       Object.entries(newCurrentConversation.selectedUsers).forEach(([key, value]) => dispatch('retrieveUser', value))
       commit('setCurrentConversationUsers', newCurrentConversation.selectedUsers.length)
       commit('setCurrentProjectConversation', newCurrentConversation.project)
-      
+    },
+    registerFile : ({commit}, fileObject) => {
+      FirebaseAPI.registerFile(fileObject.cid)
+      .push(fileObject.messageObject)
     }
   }
   

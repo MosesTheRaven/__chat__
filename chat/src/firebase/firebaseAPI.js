@@ -43,13 +43,17 @@ const FirebaseAPI = {
             content : 'This is the begininning of this conversation',
             name : 'WorkChatAdmin',
             uid : '3fa6FciusyTdhmBEqG9PKYfoifn2',
-            timestamp : Date.now()
+            timestamp : Date.now(),
+            file : {}
         }, conv.name)
         firebase.database().ref('conversations/' + newConversationKey).update({'cid' : newConversationKey})
         conv['selectedUsers'].forEach((user, index) => {
             firebase.database().ref('users/' + user + '/conversations/').update({[newConversationKey] : true})
             if(index == conv['selectedUsers'].length) return true;
         });
+    },
+    registerFile: (cid)=>{
+        return firebase.database().ref('conversations/' + cid + '/files')
     },
     retrieveUsers: ()=>{
         return firebase.database().ref('users')

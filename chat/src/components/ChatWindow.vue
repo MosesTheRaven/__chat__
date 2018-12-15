@@ -13,22 +13,58 @@
                 </v-flex>
                 <v-flex xs9>
                     <p class="message-content">{{message.content}}</p>
-                    <span class="message-content" v-if="message.file"><a target="_blank" :href="message.file.path">Download</a></span>
+                    <!-- :href="message.file.path" -->
+                    <span class="message-content" v-if="message.file"><a @click="type=message.file.type; source= message.file.path; dialog=true" >Preview</a></span>
                 </v-flex>
             </v-flex>
         </li>
+        <v-dialog v-model="dialog" persistent width="500">
+            <v-card>
+                <v-card-title class="headline" primary-title>
+                    File preview
+                </v-card-title>
+                <v-responsive>
+                    <v-img v-if="imgTypes.includes(type)" :src="source"></v-img>
+                    <audio v-else-if="musicTypes.includes(type)" controls>
+                        <source :src="source">
+                    </audio>
+                    <video v-else-if="videoTypes.includes(type)" width="500" controls>
+                        <source :src="source">
+                    </video>
+                </v-responsive>
+                <v-divider></v-divider>
+                <v-card-actions>
+                    <v-btn @click="source='';dialog=false">Close</v-btn>
+                    <v-btn @click="source='';dialog=false">
+                        <a target="_blank" :href="source" style="text-decoration : none">
+                            Save
+                        </a> 
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </ul>
 </template>
 
 <script>
 import FirebaseAPI from '../firebase/firebaseAPI'
 import { mapGetters, mapActions } from 'vuex'
+import pdf from 'vue-pdf'
 
 export default {
     name : 'ChatWindow',
+    components : {
+        pdf
+    },
     data(){
         return {
             messages : [],
+            dialog : false,
+            source : "",
+            type : "",
+            imgTypes : [ 'bmp', 'dds', 'gif', 'jpg', 'png', 'psd', 'tga', 'thm', 'tif', 'tiff', 'yuv'],
+            musicTypes : ['mp3', 'wav', 'midi', 'wma', 'flac'],
+            videoTypes : ['avi', 'mp4', '3gp', 'mkv']
         }
     },
     methods : {
@@ -75,6 +111,9 @@ export default {
         padding-left : 10px;
         overflow: auto;
         list-style-type: none;
+    }
+    .messages li:first-child .message-content:nth-child(2){
+        display: none
     }
     @media screen and (max-width: 769px){
         .messages {

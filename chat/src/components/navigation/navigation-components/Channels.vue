@@ -22,6 +22,5 @@ export default {
             channels : ['marketing department', 'managers', 'development team']
         }
     }
-    
 }
 </script>

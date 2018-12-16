@@ -15,10 +15,22 @@
         <v-subheader>
           Files
         </v-subheader>
-        <v-treeview :items="items"></v-treeview>
-        <!-- <v-treeview open-on-click :items="filesObject">
-
-        </v-treeview> -->
+        <ul class="ul-root">
+          <ul class="ul-node" v-if="fileCategory.files.length > 0" v-for="(fileCategory, i) in filesObject" :key="i">
+            <span v-on:click="fileCategory.open=!fileCategory.open">
+              <i :class="fileCategory.open ? 'fas fa-folder-open' : 'fas fa-folder' "></i>
+              {{fileCategory.name}}
+            </span>
+            <ul v-if="fileCategory.open">
+              <li v-for="(file, index) in fileCategory.files" :key="index">
+                <a :href="file['file']['path']" target="_blank" style="text-decoration : none">
+                  <i :class="fileCategory.icon"></i>
+                  {{file['file']['name'].length > 20 ? file['file']['name'].substring(0,20) + '...' : file['file']['name']}}
+                </a>
+              </li>
+            </ul>
+          </ul>
+        </ul>
       </v-list>
     </v-navigation-drawer>
 </template>
@@ -32,123 +44,137 @@
         return{
             conversationUsers : [],
             rightDrawer : this.$mq !== 'sm' ? null : false,
-            items: [
+            filesObject : 
+            [
               {
-                id: 1,
-                name: 'Applications :',
-                children: [
-                  { id: 2, name: 'Calendar : app' },
-                  { id: 3, name: 'Chrome : app' },
-                  { id: 4, name: 'Webstorm : app' }
-                ]
-              },
+                  name: 'Archives',
+                  icon : 'far fa-file-archive',
+                  open : true,
+                  files : [
+                  ]
+              }, 
               {
-                id: 5,
-                name: 'Documents :',
-                children: [
-                  {
-                    id: 6,
-                    name: 'vuetify :',
-                    children: [
-                      {
-                        id: 7,
-                        name: 'src :',
-                        children: [
-                          { id: 8, name: 'index : ts' },
-                          { id: 9, name: 'bootstrap : ts' }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    id: 10,
-                    name: 'material2 :',
-                    children: [
-                      {
-                        id: 11,
-                        name: 'src :',
-                        children: [
-                          { id: 12, name: 'v-btn : ts' },
-                          { id: 13, name: 'v-card : ts' },
-                          { id: 14, name: 'v-window : ts' }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
+                  name: 'PDF',
+                  icon : 'far fa-file-pdf',
+                  open : true,
+                  files : [
+                  ]
+              }, 
               {
-                id: 15,
-                name: 'Downloads :',
-                children: [
-                  { id: 16, name: 'October : pdf' },
-                  { id: 17, name: 'November : pdf' },
-                  { id: 18, name: 'Tutorial : html' }
-                ]
-              },
+                  name: 'Presentations' ,
+                  icon : 'far fa-file-powerpoint',
+                  open : true,
+                  files : [
+                  ]
+              }, 
               {
-                id: 19,
-                name: 'Videos :',
-                children: [
-                  {
-                    id: 20,
-                    name: 'Tutorials :',
-                    children: [
-                      { id: 21, name: 'Basic layouts : mp4' },
-                      { id: 22, name: 'Advanced techniques : mp4' },
-                      { id: 23, name: 'All about app : dir' }
-                    ]
-                  },
-                  { id: 24, name: 'Intro : mov' },
-                  { id: 25, name: 'Conference introduction : avi' }
-                ]
+                  name: 'Documents' ,
+                  icon : 'far fa-file-word',
+                  open : true,
+                  files : [
+                  ]
+              }, 
+              {
+                  name: 'Sheets' ,
+                  icon : 'far fa-file-excel',
+                  open : true,
+                  files : [
+                  ]
+              }, 
+              {
+                  name: 'Images' ,
+                  icon : 'far fa-file-image',
+                  open : true,
+                  files : [
+                  ]
+              }, 
+              {
+                  name: 'Music' ,
+                  icon : 'far fa-file-audio',
+                  open : true,
+                  files : [
+                  ]
+              }, 
+              {
+                  name: 'Videos' ,
+                  icon : 'far fa-file-video',
+                  open : true,
+                  files : [
+                  ]
               }
-            ],
-            filesObject : {
-              'Archives' : {
-                icon : 'icon',
-                files : []
-              },
-              'PDF' : {
-                icon : 'icon',
-                files : []
-              },
-              'Presentations' : {
-                icon : 'icon',
-                files : []
-              },
-              'Documents' : {
-                icon : 'icon',
-                files : []
-              },
-              'Sheets' : {
-                icon : 'icon',
-                files : []
-              },
-              'Images' : {
-                icon : 'icon',
-                files : []
-              },
-              'Music' : {
-                icon : 'icon',
-                files : []
-              },
-              'Videos' : {
-                icon : 'icon',
-                files : []
-              }
-          
-          
-          
-          
-          
+            ]
           }
-        }
     },
     computed :{
       ...mapGetters(['getCurrentConversationUsersObject', 'getCurrentConversationFiles'])
     },
-    
+    methods : {
+      addFile(fileObject){
+        switch(fileObject[1].file.type){
+          case 'zip':
+          case 'rar':
+          case '7z' :
+          case 'gz' : {
+            this.filesObject[0].files.push(fileObject[1])
+            break
+          }
+          case 'pdf' : {
+            this.filesObject[1].files.push(fileObject[1])
+            break
+          }
+          case 'pps':
+          case 'ppt': 
+          case 'pptx': {
+            this.filesObject[2].files.push(fileObject[1])
+            break
+          }
+          case 'doc': 
+          case 'docx':
+          case 'odt' : 
+          case 'txt' : {
+            this.filesObject[3].files.push(fileObject[1])
+            break
+          }
+          case 'bmp' :
+          case 'dds' :
+          case 'gif' :
+          case 'jpg' :
+          case 'png' :
+          case 'psd' :
+          case 'tga' :
+          case 'thm' :
+          case 'tif' :
+          case 'tiff' :
+          case 'yuv' : {
+            this.filesObject[4].files.push(fileObject[1])
+            break
+          }
+          case 'xlr' :
+          case 'xls' :
+          case 'xlsx' : {
+            this.filesObject[5].files.push(fileObject[1])
+            break
+          }
+          case 'mp3' :
+          case 'wav' :
+          case 'midi' :
+          case 'wma' :
+          case 'flac' : {
+            this.filesObject[6].files.push(fileObject[1])
+            break
+          }
+          case 'avi' :
+          case 'mp4' :
+          case '3gp' :
+          case 'mkv' : {
+            this.filesObject[7].files.push(fileObject[1])
+            break
+          }
+
+
+        }
+      }
+    },
     watch : {
         rightDrawerVar : function(){
             this.rightDrawer = this.rightDrawerVar
@@ -157,9 +183,90 @@
             this.$emit('setRightDrawerVar', this.rightDrawer)
         },
         getCurrentConversationFiles : function(){
-          console.log(this.getCurrentConversationFiles)
-        }
+          this.filesObject = [
+              {
+                  name: 'Archives',
+                  icon : 'far fa-file-archive',
+                  open : true,
+                  files : [
+                  ]
+              }, 
+              {
+                  name: 'PDF',
+                  icon : 'far fa-file-pdf',
+                  open : true,
+                  files : [
+                  ]
+              }, 
+              {
+                  name: 'Presentations' ,
+                  icon : 'far fa-file-powerpoint',
+                  open : true,
+                  files : [
+                  ]
+              }, 
+              {
+                  name: 'Documents' ,
+                  icon : 'far fa-file-word',
+                  open : true,
+                  files : [
+                  ]
+              }, 
+              {
+                  name: 'Sheets' ,
+                  icon : 'far fa-file-excel',
+                  open : true,
+                  files : [
+                  ]
+              }, 
+              {
+                  name: 'Images' ,
+                  icon : 'far fa-file-image',
+                  open : true,
+                  files : [
+                  ]
+              }, 
+              {
+                  name: 'Music' ,
+                  icon : 'far fa-file-audio',
+                  open : true,
+                  files : [
+                  ]
+              }, 
+              {
+                  name: 'Videos' ,
+                  icon : 'far fa-file-video',
+                  open : true,
+                  files : [
+                  ]
+              }
+            ]
+          if(this.getCurrentConversationFiles){
+            Object.entries(this.getCurrentConversationFiles)
+            .forEach((fileObject) => this.addFile(fileObject))
+          }
+        },
+        
     },
     props : ['rightDrawerVar']
   }
 </script>
+<style scoped>
+  ul{
+    list-style-type: none
+  }
+  .ul-root{
+    cursor : pointer;
+    font-weight: 500;
+    line-height : 35px;
+    color : #455a64 !important;
+    padding : 1px 5px;
+  }
+  .ul-root i{
+    font-size : 20px;
+    padding-right : 5px;
+  }
+  .ul-node{
+    padding : 0;
+  }
+</style>

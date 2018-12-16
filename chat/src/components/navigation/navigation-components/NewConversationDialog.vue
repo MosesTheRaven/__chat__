@@ -69,7 +69,7 @@ export default {
         // loader : false
     }),
     computed : {
-        ...mapGetters(['getUsers'])
+        ...mapGetters(['getUsers', 'getUserData'])
     },
     methods : {
         ...mapActions(['retrieveUsers', 'createNewConversation', 'sendNotification', ]),
@@ -81,6 +81,7 @@ export default {
             this.users = []
             this.conversation = {}
             this.conversation.selectedUsers = []
+            this.conversation.selectedUsers.push(this.getUserData.uid)
             this.dialog = false  
             this.sendNotification('Successfully created a new conversation')
           }
@@ -93,6 +94,7 @@ export default {
             this.users = []
             this.conversation = {}
             this.conversation.selectedUsers = []
+            this.conversation.selectedUsers.push(this.getUserData.uid)
             this.dialog = false  
             
         },
@@ -102,6 +104,7 @@ export default {
     },
     created() {
         this.retrieveUsers()
+        this.conversation.selectedUsers.push(this.getUserData.uid)
     },
     
 

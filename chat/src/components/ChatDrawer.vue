@@ -9,7 +9,7 @@
         <v-subheader>
           Members
         </v-subheader>
-        <v-chip  v-for="(user, i) in getCurrentConversationUsersObject" :key="i" color="primary" text-color="white">
+        <v-chip  v-for="(user, i) in getCurrentConversationUsersObject" :key="i" text-color="primary">
           <v-avatar><v-icon>account_circle</v-icon></v-avatar>  {{ user.name }}
         </v-chip>
         <v-subheader>

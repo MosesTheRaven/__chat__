@@ -9,7 +9,7 @@
                 <!-- <v-subheader>Conversations</v-subheader> -->
                 <Projects/>
                 <v-divider></v-divider>
-                <v-spacer></v-spacer>
+                <v-spacer class="py-3"></v-spacer>
                 <!-- <v-tooltip bottom>
                     <v-btn
                         slot="activator"

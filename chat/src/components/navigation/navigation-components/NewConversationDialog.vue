@@ -1,12 +1,18 @@
 <template>
   <v-list-tile class="font-italic" @click="toggleDialog">
+    <!-- @click="toggleDialog" -->
     <v-list-tile-action>
-      <v-avatar>
+      <!-- <v-btn fab depressed small color="primary"> -->
+        <span class="headline">
+          <i class="far fa-comments"></i>
+        </span>
+      <!-- </v-btn> -->
+      <!-- <v-avatar>
         <i class="fas fa-plus"></i>
-      </v-avatar>
+      </v-avatar> -->
     </v-list-tile-action>
-    <v-list-tile-content>
-      Start new ...
+    <v-list-tile-content class="non-italic">
+      Start new conversation 
     </v-list-tile-content>
       
       <v-dialog v-model="dialog" persistent max-width="600px">
@@ -112,6 +118,11 @@ export default {
 }
 </script>
 <style>
+  .non-italic{
+    font-style: normal !important;
+    font-size : 14px;
+    font-weight : 500 !important;
+  }
   .checkbox-wrapper .v-input__slot{
     margin-bottom : 0px !important
   }

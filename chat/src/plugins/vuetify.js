@@ -13,7 +13,7 @@ Vue.use(Vuetify, {
         accent: colors.indigo.darken1,
         error: colors.red.accent4,
         warning: colors.yellow.base,
-        info: colors.lightBlue.base,
+        info: colors.orange.darken3,
         success: colors.green.base
     },
     iconfont: 'mdi'

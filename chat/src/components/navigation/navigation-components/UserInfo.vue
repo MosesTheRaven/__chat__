@@ -2,7 +2,7 @@
     <v-toolbar class="py-3 primary">
         <v-toolbar-side-icon>
             <v-avatar color="secondary" class="ml-2">
-                <v-icon class="white--text">account_circle</v-icon>
+                <i class="fas fa-bat"></i>
             </v-avatar>
         </v-toolbar-side-icon>
         <v-toolbar-title class="px-3">{{ username }}</v-toolbar-title>

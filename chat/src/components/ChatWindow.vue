@@ -5,7 +5,8 @@
             <v-flex row class="py-1">
                 <v-flex v-if="messages[index-1 < 0 ? 0 : index-1].sender.name != messages[index].sender.name" xs3>
                     <v-avatar size="30" class="message-sender-avatar ">
-                        <v-icon>account_circle</v-icon>
+                        <i class="fas fa-bat"></i>
+                        <!-- <v-icon>account_circle</v-icon> -->
                     </v-avatar>
                     <span class="message-sender">
                             {{message.sender.name}}

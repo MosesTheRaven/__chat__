@@ -37,6 +37,7 @@
 
 <script>
   import {mapGetters, mapActions} from 'vuex'
+  import * as firebase from 'firebase'
 
   export default {
     name : 'ChatDrawer',
@@ -49,56 +50,63 @@
               {
                   name: 'Archives',
                   icon : 'far fa-file-archive',
-                  open : true,
+                  open : false,
                   files : [
                   ]
               }, 
               {
                   name: 'PDF',
                   icon : 'far fa-file-pdf',
-                  open : true,
+                  open : false,
                   files : [
                   ]
               }, 
               {
                   name: 'Presentations' ,
                   icon : 'far fa-file-powerpoint',
-                  open : true,
+                  open : false,
                   files : [
                   ]
               }, 
               {
                   name: 'Documents' ,
                   icon : 'far fa-file-word',
-                  open : true,
+                  open : false,
                   files : [
                   ]
               }, 
               {
                   name: 'Sheets' ,
                   icon : 'far fa-file-excel',
-                  open : true,
+                  open : false,
                   files : [
                   ]
               }, 
               {
                   name: 'Images' ,
                   icon : 'far fa-file-image',
-                  open : true,
+                  open : false,
                   files : [
                   ]
               }, 
               {
                   name: 'Music' ,
                   icon : 'far fa-file-audio',
-                  open : true,
+                  open : false,
                   files : [
                   ]
               }, 
               {
                   name: 'Videos' ,
                   icon : 'far fa-file-video',
-                  open : true,
+                  open : false,
+                  files : [
+                  ]
+              },
+              {
+                  name: 'Other' ,
+                  icon : 'far fa-file',
+                  open : false,
                   files : [
                   ]
               }
@@ -106,9 +114,10 @@
           }
     },
     computed :{
-      ...mapGetters(['getCurrentConversationUsersObject', 'getCurrentConversationFiles'])
+      ...mapGetters(['getCurrentConversationUsersObject', 'getCurrentConversationFiles', 'getCurrentConversationId'])
     },
     methods : {
+      ...mapActions(['drawerResolveFiles']),
       addFile(fileObject){
         switch(fileObject[1].file.type){
           case 'zip':
@@ -135,6 +144,12 @@
             this.filesObject[3].files.push(fileObject[1])
             break
           }
+          case 'xlr' :
+          case 'xls' :
+          case 'xlsx' : {
+            this.filesObject[4].files.push(fileObject[1])
+            break
+          }
           case 'bmp' :
           case 'dds' :
           case 'gif' :
@@ -146,12 +161,6 @@
           case 'tif' :
           case 'tiff' :
           case 'yuv' : {
-            this.filesObject[4].files.push(fileObject[1])
-            break
-          }
-          case 'xlr' :
-          case 'xls' :
-          case 'xlsx' : {
             this.filesObject[5].files.push(fileObject[1])
             break
           }
@@ -170,8 +179,9 @@
             this.filesObject[7].files.push(fileObject[1])
             break
           }
-
-
+          default : {
+            this.filesObject[8].files.push(fileObject[1])
+          }
         }
       }
     },
@@ -187,56 +197,63 @@
               {
                   name: 'Archives',
                   icon : 'far fa-file-archive',
-                  open : true,
+                  open : false,
                   files : [
                   ]
               }, 
               {
                   name: 'PDF',
                   icon : 'far fa-file-pdf',
-                  open : true,
+                  open : false,
                   files : [
                   ]
               }, 
               {
                   name: 'Presentations' ,
                   icon : 'far fa-file-powerpoint',
-                  open : true,
+                  open : false,
                   files : [
                   ]
               }, 
               {
                   name: 'Documents' ,
                   icon : 'far fa-file-word',
-                  open : true,
+                  open : false,
                   files : [
                   ]
               }, 
               {
                   name: 'Sheets' ,
                   icon : 'far fa-file-excel',
-                  open : true,
+                  open : false,
                   files : [
                   ]
               }, 
               {
                   name: 'Images' ,
                   icon : 'far fa-file-image',
-                  open : true,
+                  open : false,
                   files : [
                   ]
               }, 
               {
                   name: 'Music' ,
                   icon : 'far fa-file-audio',
-                  open : true,
+                  open : false,
                   files : [
                   ]
               }, 
               {
                   name: 'Videos' ,
                   icon : 'far fa-file-video',
-                  open : true,
+                  open : false,
+                  files : [
+                  ]
+              },
+              {
+                  name: 'Other' ,
+                  icon : 'far fa-file',
+                  open : false,
                   files : [
                   ]
               }
@@ -246,7 +263,15 @@
             .forEach((fileObject) => this.addFile(fileObject))
           }
         },
-        
+        // getCurrentConversationId : function(){
+        //   if(this.getCurrentConversationId){
+        //     firebase.database().ref('conversations/' + this.getCurrentConversationId + '/files')
+        //     .on('child_added', (fileDataSnapshot)=>{
+        //       // console.log(fileDataSnapshot, fileDataSnapshot.val())
+        //       this.setNewCurrentConversation(this.getCurrentConversationId)
+        //     })
+        //   }
+        // }
     },
     props : ['rightDrawerVar']
   }

@@ -20,39 +20,51 @@
             @click:clear="clearMessage"
             />
         </v-form>   
-        <v-bottom-sheet v-model="bottomSheet" inset>
-            <v-flex xs12>
-            <v-card >
-              <v-layout row >
-                <v-flex xs4 offset-xs2>
-                  <v-card-title primary-title>
-                    <div>
-                      <div class="headline">File name: <strong>{{ file.name }}</strong></div>
-                      <div>Autor: <strong>{{ getUserData.name }}</strong></div>
-                      <div>
-                          <input v-if="!fileUploaded" type="file" value="upload" id="fileButton" @change="(event)=>getFile(event)">
-                          <span color="error">{{ error }}</span>
-                          <v-text-field label="File description" auto-grow v-model="file.description"></v-text-field>
-                      </div>
-                    </div>
-                  </v-card-title>
-                </v-flex>
-                <v-flex xs4 offset-xs2 class="py-4">
-                    <v-progress-circular v-if="!fileUploaded" :rotate="360" :size="100" :width="15" :value="fileUploadStatus" color="secondary">
-                        {{ fileUploadStatus }}
-                    </v-progress-circular>
-                    <span v-else class="display-4">
-                        <i :class="fileTypes[file.type]"></i>
-                    </span>
-                </v-flex>
-              </v-layout>
-              <v-divider light></v-divider>
-              <v-card-actions class="pa-3">
-                  <v-flex justify-end></v-flex>
-                  <v-btn flat color="error" @click="discard">Discard</v-btn>
-                  <v-btn :disabled="!fileUploaded" color="secondary" @click="specialSendMessage">Send</v-btn>
-              </v-card-actions>
-            </v-card>
+        <v-bottom-sheet v-model="bottomSheet" inset >
+            <v-flex>
+              <v-card color="primary" dark>
+                <v-layout row>
+                    <v-flex offset-sm2 offset-md2 offset-lg2 offset-xl2>
+                    <v-card-title primary-title>
+                        <div>
+                        <div class="headline"><strong>{{ file.name }}</strong></div>
+                        <p>Autor: <strong>{{ getUserData.name }}</strong></p>
+                        <div>
+                                
+                            <span color="error">{{ error }}</span>
+                            <v-textarea label="File description" auto-grow box :rows="3" v-model="file.description" style="margin-top : 25px"></v-textarea>
+                        </div>
+                        </div>
+                    </v-card-title>
+                    </v-flex>
+                    <v-flex class="retarded-flex">
+                        <div>
+                            <v-tooltip top v-if="tooltip">
+                                <span>Choose a file</span>
+                                <label slot="activator" flat for="fileButton" style="cursor : pointer; font-size : 100px; font-weight : 200; color : #F0F0F0">
+                                    <i class="fal fa-plus-square"></i>
+                                </label>
+                                <input v-if="!fileUploaded" name="fileButton" type="file" value="upload" id="fileButton" @change="(event)=>getFile(event)" style="display : none ">
+                            </v-tooltip>
+                            <v-progress-circular v-if="!fileUploaded && !tooltip" :rotate="360" :size="100" :width="15" :value="fileUploadStatus" color="secondary">
+                                {{ fileUploadStatus }}
+                            </v-progress-circular>
+                            <label v-if="fileUploaded" flat for="fileButton" style="font-size : 120px; font-weight : 300; color : #F0F0F0">
+                                <i :class="'far ' + fileTypes[(file.type).toLowerCase()]"></i>
+                            </label>
+                        </div>
+                    </v-flex>  
+                </v-layout>
+                <v-divider light></v-divider>
+                <v-card-actions class="pa-3">
+                    <v-flex justify-end></v-flex>
+                    <v-btn flat @click="discard" color="info">Discard</v-btn>
+                    <v-btn :disabled="!fileUploaded"  @click="specialSendMessage" color="info">Send</v-btn>
+                    <!-- -->
+                    <!-- style="color : #d25d19 !important" -->
+                    <!-- style="color : white !important; background-color : #d25d19 !important" -->
+                </v-card-actions>
+              </v-card>
           </v-flex>
         </v-bottom-sheet>
     
@@ -81,6 +93,7 @@ export default {
                 'mdi-emoticon-tongue'
             ],
             bottomSheet: false,
+            tooltip : true,
             file : {
                 name : "",
                 description : "",
@@ -184,7 +197,7 @@ export default {
             this.fileStorageRef = firebase.storage().ref('conversations/' + this.getCurrentConversation + '/' + file.name)
 
             var task = this.fileStorageRef.put(file) 
-
+            this.tooltip = false
 
             task.on('state_changed', (snapshot) => this.progress(snapshot), (err) => this.handleFileError(err), () => this.complete())
 
@@ -225,7 +238,17 @@ export default {
             this.discard()
         },
         discard(){
-            this.sendNotification('File discarded')
+            this.file = {
+                name : "",
+                description : "",
+                type : "",
+                path : ""
+            }
+            this.fileUploadStatus = 0,
+            this.tooltip = true;
+            this.error = "",
+            this.fileUploaded = false,
+            this.fileStorageRef = '',
             this.bottomSheet = false
             this.fileDescription = ""
         }
@@ -234,3 +257,10 @@ export default {
 }
 </script>
 
+<style>
+    .retarded-flex{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+</style>

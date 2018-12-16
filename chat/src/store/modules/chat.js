@@ -10,7 +10,7 @@ const state = {
   // currentConversationUsers : '',
   projectConversation : null, // t/f 
   currentConversationUsersObject : [], // conversation users
-  currentConversationFiles : {}
+  currentConversationFiles : []
 }
   
   const getters = {
@@ -77,7 +77,14 @@ const state = {
     },
     setCurrentConversationFiles : (state, newFiles) => {
       state.currentConversationFiles = newFiles
+    },
+    addNewFileToCurrentConversationFiles : (state, newFile) => {
+      state.currentConversationFiles.push(newFile)
+    },
+    flushCurrentConversationFiles : (state) => {
+      state.currentConversationFiles.length = []
     }
+
   }
 
   const actions = {
@@ -105,7 +112,12 @@ const state = {
     },
     setNewCurrentConversation: ({dispatch, commit}, newCurrentConversation)=>{
       commit('setCurrentConversationId', newCurrentConversation.cid)
-      commit('setCurrentConversationFiles', newCurrentConversation.files)
+      commit('flushCurrentConversationFiles')
+      commit('setCurrentConversationFiles', [])
+      FirebaseAPI.registerFile(newCurrentConversation.cid)
+      .on('child_added', (file)=>{
+        commit('addNewFileToCurrentConversationFiles', file.val())
+      })
       commit('resetCurrentConversationUsers')
       commit('setCurrentConversation', newCurrentConversation.name)
       Object.entries(newCurrentConversation.selectedUsers).forEach(([key, value]) => dispatch('retrieveUser', value))

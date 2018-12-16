@@ -1,15 +1,10 @@
 <template>
     <v-toolbar class="py-3 primary">
-        <v-toolbar-side-icon>
-            <v-avatar color="secondary" class="ml-2">
-                <i class="fas fa-bat"></i>
-            </v-avatar>
+        <v-toolbar-side-icon class="headline">
+            <i :class="username === 'dajo' ? 'fas fa-bat' : 'fas fa-user-graduate'"></i>
         </v-toolbar-side-icon>
         <v-toolbar-title class="px-3">{{ username }}</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon>
-            <v-icon>settings</v-icon>
-        </v-btn>
     </v-toolbar>
     <!-- <v-list-tile avatar class="py-3 primary">
         <v-list-tile-avatar>

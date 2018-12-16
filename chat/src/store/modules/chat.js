@@ -123,7 +123,6 @@ const state = {
     retrieveUser : ({commit}, newUser) => {
       FirebaseAPI.retrieveUser(newUser, (newUserObject)=>{
         commit('addUserToCurrentConversation', newUserObject)
-        console.log('committing mutation', newUserObject)
       })
     },
     retrieveConversations : ({commit}, uid)=>{

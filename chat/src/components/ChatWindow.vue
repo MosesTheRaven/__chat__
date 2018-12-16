@@ -5,7 +5,7 @@
             <v-flex row class="py-1">
                 <v-flex v-if="messages[index-1 < 0 ? 0 : index-1].sender.name != messages[index].sender.name" xs3>
                     <v-avatar size="30" class="message-sender-avatar ">
-                        <i class="fas fa-bat"></i>
+                        <i :class="message.sender.name==='dajo' ? 'fas fa-bat' : 'fas fa-user-graduate'"></i>
                         <!-- <v-icon>account_circle</v-icon> -->
                     </v-avatar>
                     <span class="message-sender">
@@ -13,13 +13,13 @@
                     </span>
                 </v-flex>
                 <v-flex xs9>
-                    <p class="message-content">{{message.content}}</p>
+                    <p class="message-content" style="overflow : hidden">{{message.content}}</p>
                     <!-- :href="message.file.path" -->
-                    <span class="message-content" v-if="message.file"><a @click="type=message.file.type; source= message.file.path; dialog=true" >Preview</a></span>
+                    <span class="message-content" v-if="message.file"><a style="font-size : 12px; color : rgb(219, 106, 12) !important" @click="type=message.file.type; source= message.file.path; dialog=true" >PREVIEW</a></span>
                 </v-flex>
             </v-flex>
         </li>
-        <v-dialog v-model="dialog" persistent width="500">
+        <v-dialog v-model="dialog" persistent max-height="700" max-width="500">
             <v-card>
                 <v-card-title class="headline" primary-title>
                     File preview
@@ -34,10 +34,10 @@
                     </video>
                 </v-responsive>
                 <v-divider></v-divider>
-                <v-card-actions>
-                    <v-btn @click="source='';dialog=false">Close</v-btn>
-                    <v-btn @click="source='';dialog=false">
-                        <a target="_blank" :href="source" style="text-decoration : none">
+                <v-card-actions style="justify-content : flex-end">
+                    <v-btn flat color="secondary" @click="source='';dialog=false">Close</v-btn>
+                    <v-btn color="secondary" @click="source='';dialog=false">
+                        <a target="_blank" :href="source" class="white--text" style="text-decoration : none">
                             Save
                         </a> 
                     </v-btn>

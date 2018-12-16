@@ -1,20 +1,17 @@
 <template>
-  <v-list-tile class="font-italic" @click="toggleDialog">
-    <!-- @click="toggleDialog" -->
-    <v-list-tile-action>
-      <!-- <v-btn fab depressed small color="primary"> -->
+  <v-list-tile class="font-italic" >
+    <v-btn class="non-italic" block color="secondary" @click="toggleDialog" >
+      Start new conversation
+    </v-btn>
+    <!-- <v-list-tile-action>
         <span class="headline">
           <i class="far fa-comments"></i>
         </span>
-      <!-- </v-btn> -->
-      <!-- <v-avatar>
-        <i class="fas fa-plus"></i>
-      </v-avatar> -->
     </v-list-tile-action>
     <v-list-tile-content class="non-italic">
       Start new conversation 
     </v-list-tile-content>
-      
+       -->
       <v-dialog v-model="dialog" persistent max-width="600px">
        <v-card light>
         <v-card-title class="blue darken-2 white--text">
@@ -31,7 +28,7 @@
             <v-layout wrap>
               <v-flex>
                 <v-checkbox  color="secondary darken-2" label="Project conversation" v-model="conversation.project" :value="conversation.project"></v-checkbox>
-                <v-text-field  v-model="projectDescription" label="Project description" :disabled="!conversation.project" required></v-text-field>
+                <v-text-field v-model="projectDescription" label="Project description" :disabled="!conversation.project" required></v-text-field>
               </v-flex>
             </v-layout>
             <v-form>

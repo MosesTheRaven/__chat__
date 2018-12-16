@@ -1,6 +1,6 @@
 <template>
     <v-navigation-drawer v-model="rightDrawer" app clipped right>
-      <v-toolbar class="py-3">
+      <v-toolbar class="py-3" style="border-bottom : solid 1px rgb(215,215,215); box-shadow : none !important">
         <v-toolbar-title>
           Conversation Information
         </v-toolbar-title>

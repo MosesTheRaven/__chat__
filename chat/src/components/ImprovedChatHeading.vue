@@ -1,8 +1,9 @@
 <template>
-    <v-toolbar class="py-3">
+    <v-toolbar  class="py-3" 
+                :style="this.$mq !== 'sm' ? 'box-shadow : 0px 4px 50px -10px #1E88E5 !important;' : ''">
         <v-toolbar-side-icon v-if="this.$mq === 'sm'">
             <v-avatar class="ml-4" @click="emitToChat">
-                    <i class="blue--text text--darken-2 fas fa-arrow-left"></i>
+                    <i class="blue--text text--darken-2 fas fa-bars"></i>
                 </v-avatar>
                 <v-avatar color="secondary" class="ml-2">
                     <v-icon class="white--text ">forum</v-icon>

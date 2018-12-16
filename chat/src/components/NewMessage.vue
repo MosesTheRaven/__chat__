@@ -7,9 +7,7 @@
             label="type message here.." 
             v-model="message"
             :append-icon="marker ? 'mdi-upload' : 'mdi-upload'"
-            :append-outer-icon="message ? 'mdi-send' : 'mdi-microphone'"
             
-            :prepend-icon="icon"
             
             clear-icon="mdi-close-circle"
             clearable
@@ -58,7 +56,7 @@
                 <v-divider light></v-divider>
                 <v-card-actions class="pa-3">
                     <v-flex justify-end></v-flex>
-                    <v-btn flat @click="discard" color="info">Discard</v-btn>
+                    <v-btn flat @click="discard()" color="info">Discard</v-btn>
                     <v-btn :disabled="!fileUploaded"  @click="specialSendMessage" color="info">Send</v-btn>
                     <!-- -->
                     <!-- style="color : #d25d19 !important" -->

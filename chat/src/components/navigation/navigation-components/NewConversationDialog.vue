@@ -78,7 +78,7 @@ export default {
         ...mapGetters(['getUsers', 'getUserData'])
     },
     methods : {
-        ...mapActions(['retrieveUsers', 'createNewConversation', 'sendNotification', ]),
+        ...mapActions(['retrieveUsers', 'createNewConversation', 'sendNotification', 'setNewCurrentConversation']),
 
         initiateNewConversationCreation(){
 

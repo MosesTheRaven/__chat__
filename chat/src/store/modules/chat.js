@@ -50,9 +50,26 @@ const state = {
     addConversation : (state, newConversation) => {
       let conversations = state.conversations
       let projects = state.projects
-
-      if(newConversation.project) projects.push(newConversation)
-      else conversations.push(newConversation)
+      if(newConversation.project){
+        var isInProjects = false
+        for(var i = 0; i < projects.length; i++){
+          if(projects[i].cid == newConversation.cid) {
+            isInProjects = true;
+            break
+          }
+        }
+        if(!isInProjects) projects.push(newConversation)
+      } 
+      else {
+        var isInConversations = false
+        for(var i = 0; i < conversations.length; i++){
+          if(conversations[i].cid == newConversation.cid) {
+            isInConversations = true;
+            break
+          }
+        }
+        if(!isInConversations) conversations.push(newConversation)
+    } 
 
       state.projects = projects
       state.conversations = conversations
@@ -70,7 +87,14 @@ const state = {
       state.currentConversationId = newConversationId
     },
     addUserToCurrentConversation : (state, newUser) => {
-      state.currentConversationUsersObject.push(newUser)
+      var isInUsers = false
+      for(var i = 0; i < state.currentConversationUsersObject.length; i++){
+        if(state.currentConversationUsersObject[i].uid == newUser.uid) {
+          isInUsers = true
+          break
+        }
+      }
+      if(!isInUsers) state.currentConversationUsersObject.push(newUser)
     },
     resetCurrentConversationUsers : (state) => {
       state.currentConversationUsersObject.length = 0
@@ -82,7 +106,7 @@ const state = {
       state.currentConversationFiles.push(newFile)
     },
     flushCurrentConversationFiles : (state) => {
-      state.currentConversationFiles.length = []
+      state.currentConversationFiles.length = [] //wtf
     }
 
   }
@@ -97,7 +121,10 @@ const state = {
       })
     },
     retrieveUser : ({commit}, newUser) => {
-      FirebaseAPI.retrieveUser(newUser, (newUserObject)=>{commit('addUserToCurrentConversation', newUserObject)})
+      FirebaseAPI.retrieveUser(newUser, (newUserObject)=>{
+        commit('addUserToCurrentConversation', newUserObject)
+        console.log('committing mutation', newUserObject)
+      })
     },
     retrieveConversations : ({commit}, uid)=>{
       FirebaseAPI.retrieveConversations(uid).on('child_added', (conversationDataSnapshot)=>{

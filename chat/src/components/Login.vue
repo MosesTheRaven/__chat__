@@ -9,82 +9,85 @@
           <v-window v-model="step">
             <v-window-item :value="1">
               <v-card-text>
+                <v-form id="loginForm" @submit.prevent="initiateLogin">
                 <v-text-field
-                  label="Email"
-                  value="john@vuetifyjs.com"
+                  v-model="name"
+                  label="Nickname"
+                  required
                 ></v-text-field>
-                <span class="caption grey--text text--darken-1">
-                  This is the email you will use to login to your Vuetify account
-                </span>
+                <v-text-field
+                    v-model="password"
+                    :rules="[rules.required, rules.min]"
+                    :type="show ? 'text' : 'password'"
+                    name="input-10-1"
+                    label="Password"
+                    @click:append="show = !show"
+                ></v-text-field>
+                    
+              </v-form>
               </v-card-text>
             </v-window-item>
 
             <v-window-item :value="2">
               <v-card-text>
                 <v-text-field
-                  label="Password"
-                  type="password"
+                  label="Nickname"
+                  type="text"
+                  v-model='registerName'
+                  :rules="[rules.required]"
+                    
                 ></v-text-field>
                 <v-text-field
+                  v-model='registerPassword'
+                  label="Password"
+                  type="password"
+                  :rules="[rules.required, rules.min]"
+                ></v-text-field>
+                <v-text-field
+                  v-model="repeatPassword"
                   label="Confirm Password"
                   type="password"
+                  :rules="[rules.required, rules.min]"
                 ></v-text-field>
-                <span class="caption grey--text text--darken-1">
-                  Please enter a password for your account
+                <span :class="wrongUserData ? 'caption red--text' : 'caption grey--text'">
+                  {{captionText}}
                 </span>
               </v-card-text>
             </v-window-item>
 
             <v-window-item :value="3">
-              <div class="pa-3 text-xs-center">
-                <v-img
-                  class="mb-3"
-                  contain
-                  height="128"
-                  src="https://cdn.vuetifyjs.com/images/logos/v.svg"
-                ></v-img>
-                <h3 class="title font-weight-light mb-2">Welcome to Vuetify</h3>
-                <span class="caption grey--text">Thanks for signing up!</span>
+              <div class="pa-3 text-xs-center justify-center">
+                <h3 class="headline font-weight-light mb-4 blue--text text--darken-2">Now pick your avatar</h3>
+                <p v-for="i in 10" :key="i">
+                  <span v-on:click="processAvatar(i*10+j)" 
+                        :class="i*10+j == selectedAvatar ? 'blue--text avatar-picker orange-border' : 'avatar-picker '" 
+                        v-for="j in 10" 
+                        :key="j" 
+                        style="width : 100%" >
+                    <i :class="'far ' + avatars[i*10+j]" style="width: 10%; font-size: 20px"></i>
+                  </span>
+                </p>
+                <p class="headline" >You will look like this: </p> 
+                <v-chip color="primary" text-color="white">
+                  <v-avatar>
+                    <i :class="'far ' + avatars[selectedAvatar]"></i>
+                  </v-avatar>
+                    {{registerName}}
+                </v-chip>
               </div>
             </v-window-item>
           </v-window>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn
-              :disabled="step === 1"
-              flat
-              @click="step--"
-            >
-              Back
-            </v-btn>
-            <v-spacer></v-spacer>
-            <v-btn
-              :disabled="step === 3"
-              color="primary"
-              depressed
-              @click="step++"
-            >
-              Next
-            </v-btn>
+            <v-spacer v-if="step==2 || step==3"></v-spacer>
+            <v-btn flat color="secondary" @click="stepper()">{{registerButtonText}}</v-btn>
+            <v-spacer v-if="step==1"></v-spacer>
+            <v-btn v-if="step==1" :disabled="name == '' || password == ''" type="submit" form="loginForm" @click="initiateLogin" color="secondary">Login</v-btn>
+            
+            
           </v-card-actions>
         </v-card>
-        <v-form id="loginForm" @submit.prevent="initiateLogin">
-          <v-text-field
-            v-model="name"
-            label="Nickname"
-            required
-          ></v-text-field>
-          <v-text-field
-              v-model="password"
-              :rules="[rules.required, rules.min]"
-              :type="show ? 'text' : 'password'"
-              name="input-10-1"
-              label="Password"
-              @click:append="show = !show"
-          ></v-text-field>
-              <v-btn @click="initiateRegistration">Register</v-btn>
-              <v-btn type="submit" form="loginForm" @click="initiateLogin">Login</v-btn>
-        </v-form>
+        
       </v-flex>        
     </v-layout>
 </v-container>
@@ -96,17 +99,121 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name : 'Login',
+
   computed : {
-        ...mapGetters(['isLoggedIn', 'getCrashReport']),
-        currentTitle () {
-        switch (this.step) {
-          case 1: return 'Sign-up'
-          case 2: return 'Create a password'
-          default: return 'Account created'
-        }
-      }
+      ...mapGetters(['isLoggedIn', 'getCrashReport']),
   },
   data: () => ({
+      registerButtonText : 'Sign up',
+      registerPassword : '',
+      repeatPassword : '',
+      registerName : '',
+      selectedAvatar : 13,
+      avatars : [
+        'fa-user',
+        'fa-user-tie',
+        'fa-user-ninja',
+        'fa-user-secret',
+        'fa-user-md',
+        'fa-user-injured',
+        'fa-user-astronaut',
+        'fa-user-graduate',
+        'fa-user-crown',
+        'fa-user-alt',
+        'fa-alicorn',
+        'fa-bat',
+        'fa-unicorn',
+        'fa-cat',
+        'fa-cow',
+        'fa-dog',
+        'fa-duck',
+        'fa-dove',
+        'fa-dragon',
+        'fa-elephant',
+        'fa-pig',
+        'fa-pegasus',
+        'fa-monkey',
+        'fa-horse-head',
+        'fa-spider',
+        'fa-rabbit-fast',
+        'fa-sheep',
+        'fa-snake',
+        'fa-squirrel',
+        'fa-headphones',
+        'fa-car',
+        'fa-truck-monster',
+        'fa-acorn',
+        'fa-axe',
+        'fa-football-ball',
+        'fa-mug-hot',
+        'fa-heart',
+        'fa-poo',
+        'fa-smile',
+        'fa-meh',
+        'fa-chess-king',
+        'fa-chess-queen',
+        'fa-bug',
+        'fa-paper-plane',
+        'fa-palette',
+        'fa-paint-brush',
+        'fa-mars',
+        'fa-venus',
+        'fa-jack-o-lantern',
+        'fa-hat-witch',
+        'fa-hat-wizard',
+        'fa-ghost',
+        'fa-hockey-mask',
+        'fa-scarecrow',
+        'fa-bat',
+        'fa-skull-crossbones',
+        'fa-hand-spock',
+        'fa-hand-peace',
+        'fa-fist-raised',
+        'fa-angel',
+        'fa-snowman',
+        'fa-gingerbread-man',
+        'fa-glass-champagne',
+        'fa-bolt',
+        'fa-fire',
+        'fa-pi',
+        'fa-theta',
+        'fa-infinity',
+        'fa-cannabis',
+        'fa-biohazard',
+        'fa-radiation',
+        'fa-bomb',
+        'fa-axe-battle',
+        'fa-anchor',
+        'fa-dice-d20',
+        'fa-fighter-jet',
+        'fa-futbol',
+        'fa-gamepad',
+        'fa-helmet-battle',
+        'fa-hat-santa',
+        'fa-paw',
+        'fa-rocket',
+        'fa-sword',
+        'fa-snowflake',
+        'fa-frosty-head',
+        'fa-star',
+        'fa-cross',
+        'fa-peace',
+        'fa-yin-yang',
+        'fa-khanda',
+        'fa-jedi',
+        'fa-hood-cloak',
+        'fa-eye-evil',
+        'fa-wand',
+        'fa-omega',
+        'fa-empty-set',
+        'fa-lambda',
+        'fa-times',
+        'fa-badger-honey',
+        'fa-sun',
+        'fa-otter'
+      ],
+      captionText : 'Please enter your desired nickname and a password for your account',
+      wrongUserData : false,
       step : 1,
       show : false,
       rules: {
@@ -118,7 +225,35 @@ export default {
   }),
   methods:{
     ...mapActions(['login', 'register']),
-        
+    processAvatar(aid){
+      this.selectedAvatar = aid
+    },
+    stepper(){
+      switch (this.step) {
+        case 1 : {
+          this.step++; 
+          this.registerButtonText = 'Next'
+          break
+        }
+        case 2 : {
+          if(this.registerName != '' && this.registerPassword != '' && this.registerPassword.length > 7 && this.registerPassword == this.repeatPassword){
+            this.step++;
+            this.registerButtonText = 'Confirm'
+            this.wrongUserData = false
+          }
+          else {
+            this.captionText = "Wrong user data"
+            this.wrongUserData = true;
+          }
+          break
+        }
+        case 3 : {
+          this.initiateRegistration()
+          this.step = 1
+        } 
+      } 
+      
+    },
     initiateLogin(){
       var loginData = {
         email : this.name+"@abc.def", 
@@ -129,9 +264,10 @@ export default {
     } ,
     initiateRegistration(){
       var registrationData = {
-        name : this.name,
-        email : this.name+"@abc.def", 
-        password : this.password
+        name : this.registerName,
+        email : this.registerName + "@abc.def", 
+        password : this.registerPassword,
+        avatar : this.avatars[this.selectedAvatar]
       }
       this.register(registrationData)
     }
@@ -139,4 +275,7 @@ export default {
 }
 </script>
 <style>
+  .avatar-picker:hover {
+    color : #E65100
+  }
 </style>

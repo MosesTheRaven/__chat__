@@ -28,7 +28,7 @@
             <v-layout wrap>
               <v-flex>
                 <v-checkbox  color="secondary darken-2" label="Project conversation" v-model="conversation.project" :value="conversation.project"></v-checkbox>
-                <v-text-field v-model="projectDescription" label="Project description" :disabled="!conversation.project" required></v-text-field>
+                <v-text-field v-model="conversation.projectDescription" label="Project description" :disabled="!conversation.project" required></v-text-field>
               </v-flex>
             </v-layout>
             <v-form>
@@ -66,8 +66,8 @@ export default {
           name : "",
           selectedUsers : [],
           project : false,
+          projectDescription : "",
         },
-        projectDescription : "",
         selectedUsers : [],
         // loader : false
     }),
@@ -83,6 +83,7 @@ export default {
             this.createNewConversation(this.conversation)
             this.users = []
             this.conversation = {}
+            this.conversation.projectDescription = ""
             this.conversation.selectedUsers = []
             this.conversation.selectedUsers.push(this.getUserData.uid)
             this.dialog = false  
@@ -97,6 +98,7 @@ export default {
             this.users = []
             this.conversation = {}
             this.conversation.selectedUsers = []
+            this.conversation.projectDescription = ""
             this.conversation.selectedUsers.push(this.getUserData.uid)
             this.dialog = false  
             

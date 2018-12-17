@@ -5,11 +5,11 @@
             <v-flex row class="py-1">
                 <v-flex v-if="messages[index-1 < 0 ? 0 : index-1].sender.name != messages[index].sender.name" xs3>
                     <v-avatar size="30" class="message-sender-avatar ">
-                        <i :class="message.sender.name==='dajo' ? 'fas fa-bat' : 'fas fa-user-graduate'"></i>
+                        <i :class="'far ' + message.sender.avatar"></i>
                         <!-- <v-icon>account_circle</v-icon> -->
                     </v-avatar>
                     <span class="message-sender">
-                            {{message.sender.name}}
+                        {{message.sender.name}}
                     </span>
                 </v-flex>
                 <v-flex xs9>
@@ -32,11 +32,12 @@
                     <video v-else-if="videoTypes.includes(type)" width="500" controls>
                         <source :src="source">
                     </video>
+                    <p style="margin-left : 18px" v-else>File preview not available</p>
                 </v-responsive>
                 <v-divider></v-divider>
                 <v-card-actions style="justify-content : flex-end">
-                    <v-btn flat color="secondary" @click="source='';dialog=false">Close</v-btn>
-                    <v-btn color="secondary" @click="source='';dialog=false">
+                    <v-btn flat color="secondary" @click="nullSource()">Close</v-btn>
+                    <v-btn color="secondary" @click="nullSource()">
                         <a target="_blank" :href="source" class="white--text" style="text-decoration : none">
                             Save
                         </a> 
@@ -70,6 +71,10 @@ export default {
     },
     methods : {
         ...mapActions(['setNewCurrentConversation']),
+        nullSource(){
+            this.source = "",
+            this.dialog = false
+        }
     },
     computed : {
         ...mapGetters(['getCurrentConversation'])
@@ -85,7 +90,8 @@ export default {
                             let messageObject = {
                                 sender : {
                                     name : change.doc.data().name,
-                                    uid : change.doc.data().uid
+                                    uid : change.doc.data().uid,
+                                    avatar : change.doc.data().avatar ? change.doc.data().avatar : 'fa-user',
                                 },
                                 content : change.doc.data().content,
                                 timestamp : change.doc.data().timestamp

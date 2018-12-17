@@ -27,7 +27,8 @@ const FirebaseAPI = {
                 name : loginData.name,
                 conversations : {
                     '-LTV53d2KK36x8ZrDwIk' : true
-                }
+                },
+                avatar : loginData.avatar
             })
             .then(firebase.database().ref('conversations/-LTV53d2KK36x8ZrDwIk/selectedUsers').push(data.user.uid)
             )
@@ -97,6 +98,7 @@ const FirebaseAPI = {
                 firebase.firestore().collection(messageObject.collection).add({
                     content : messageObject.content,
                     name: messageObject.sender.name,
+                    avatar : messageObject.sender.avatar,
                     uid : messageObject.sender.uid,
                     file : messageObject.file,
                     timestamp : Date.now()
@@ -118,6 +120,7 @@ const FirebaseAPI = {
                 firebase.firestore().collection(messageObject.collection).add({
                     content : messageObject.content,
                     name: messageObject.sender.name,
+                    avatar : messageObject.sender.avatar,
                     uid : messageObject.sender.uid,
                     timestamp : Date.now()
                 })

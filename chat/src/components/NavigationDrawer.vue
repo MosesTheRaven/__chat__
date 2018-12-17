@@ -26,6 +26,9 @@
                 <NewConversationDialog/>
             <!-- </v-list-group> -->
         </v-list>
+        <v-footer absolute color="primary" class="justify-center">
+            <p style="margin-bottom : 0px !important">2018 © Pokemon Resque Squad</p>
+        </v-footer>
     </v-navigation-drawer>
 </template>
 

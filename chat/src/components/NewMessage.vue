@@ -166,7 +166,8 @@ export default {
                     content : this.message,
                     sender : {
                         name : this.getUserData.name,
-                        uid : this.getUserData.uid 
+                        uid : this.getUserData.uid,
+                        avatar : this.getUserData.avatar ? this.getUserData.avatar : 'fa-user' 
                     },
                     collection : this.getCurrentConversation
                 }
@@ -220,7 +221,8 @@ export default {
                     content : fileMessage,
                     sender : {
                         name : this.getUserData.name,
-                        uid : this.getUserData.uid 
+                        uid : this.getUserData.uid,
+                        avatar : this.getUserData.avatar ? this.getUserData.avatar : 'fa-user'  
                     },
                     file : this.file,
                     collection : this.getCurrentConversation

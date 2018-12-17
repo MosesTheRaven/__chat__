@@ -1,7 +1,7 @@
 <template>
     <v-toolbar class="py-3 primary">
         <v-toolbar-side-icon class="headline">
-            <i :class="username === 'dajo' ? 'fas fa-bat' : 'fas fa-user-graduate'"></i>
+            <i :class="'far ' + avatar"></i>
         </v-toolbar-side-icon>
         <v-toolbar-title class="px-3">{{ username }}</v-toolbar-title>
         <v-spacer></v-spacer>
@@ -31,12 +31,14 @@ export default {
     },
     data(){
         return {
-            username : 'Username'
+            username : 'Username',
+            avatar : 'fa-user'
         }
     },
     created(){
         this.username = this.getUserData.name;
-        if (!this.username) this.username = "Username"
+        if(!this.username) this.username = "Username"
+        if(this.getUserData.avatar) this.avatar = this.getUserData.avatar
     }
 }
 </script>

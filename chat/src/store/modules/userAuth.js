@@ -56,7 +56,8 @@ const actions = {
         if(userData.type == "success"){
             var retrievedUserData = {
               'name' : userData.data.name, 
-              'uid' : userData.data.uid
+              'uid' : userData.data.uid,
+              'avatar' : userData.data.avatar
             } 
             commit('setUserData', retrievedUserData)
             commit('setAuthState', true)

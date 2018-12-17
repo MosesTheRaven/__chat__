@@ -6,11 +6,18 @@
         </v-toolbar-title>
       </v-toolbar>
       <v-list subheader class="pa-1">
+        <v-subheader v-if="getCurrentProjectConversation">
+          Project Description
+        </v-subheader>
+        <p style="margin-left : 16px" v-if="getCurrentProjectConversation">{{getCurrentConversationProjectDescription}}</p>
         <v-subheader>
           Members
         </v-subheader>
         <v-chip  v-for="(user, i) in getCurrentConversationUsersObject" :key="i" text-color="primary">
-          <v-avatar><v-icon>account_circle</v-icon></v-avatar>  {{ user.name }}
+          <v-avatar>
+            <i :class="!user.avatar ? 'far fa-user' : 'far ' + user.avatar"></i>
+          </v-avatar>
+          {{ user.name }}
         </v-chip>
         <v-subheader>
           Files
@@ -114,7 +121,7 @@
           }
     },
     computed :{
-      ...mapGetters(['getCurrentConversationUsersObject', 'getCurrentConversationFiles', 'getCurrentConversationId'])
+      ...mapGetters(['getCurrentConversationUsersObject', 'getCurrentConversationFiles', 'getCurrentConversationId', 'getCurrentConversationProjectDescription', 'getCurrentProjectConversation'])
     },
     methods : {
       ...mapActions(['drawerResolveFiles']),

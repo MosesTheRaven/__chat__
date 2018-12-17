@@ -10,7 +10,8 @@ const state = {
   // currentConversationUsers : '',
   projectConversation : null, // t/f 
   currentConversationUsersObject : [], // conversation users
-  currentConversationFiles : []
+  currentConversationFiles : [],
+  currentConversationProjectDescription : ""
 }
   
   const getters = {
@@ -40,6 +41,9 @@ const state = {
     },
     getCurrentConversationFiles : ()=>{
       return state.currentConversationFiles
+    },
+    getCurrentConversationProjectDescription : ()=>{
+      return state.currentConversationProjectDescription
     }
   }
   
@@ -107,6 +111,9 @@ const state = {
     },
     flushCurrentConversationFiles : (state) => {
       state.currentConversationFiles.length = [] //wtf
+    },
+    setCurrentProjectConversationDescription : (state, newCurrentProjectConversationDescription) => {
+      state.currentConversationProjectDescription = newCurrentProjectConversationDescription
     }
 
   }
@@ -149,6 +156,8 @@ const state = {
       Object.entries(newCurrentConversation.selectedUsers).forEach(([key, value]) => dispatch('retrieveUser', value))
       commit('setCurrentConversationUsers', newCurrentConversation.selectedUsers.length)
       commit('setCurrentProjectConversation', newCurrentConversation.project)
+      commit('setCurrentProjectConversationDescription', newCurrentConversation.projectDescription)
+      
     },
     registerFile : ({commit}, fileObject) => {
       FirebaseAPI.registerFile(fileObject.cid)

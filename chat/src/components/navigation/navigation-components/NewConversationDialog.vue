@@ -14,27 +14,27 @@
        -->
       <v-dialog v-model="dialog" persistent max-width="600px">
        <v-card light>
-        <v-card-title class="blue darken-2 white--text">
+        <!-- <v-card-title class="blue darken-2 white--text">
           <span class="headline">Start new conversation</span>
-        </v-card-title>
+        </v-card-title> -->
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex>
                 <span class="title">Conversation information</span>
-                <v-text-field v-model="conversation.name" label="Conversation name" required></v-text-field>
+                <v-text-field v-model="conversation.name" label="Enter in the Conversation Name" required></v-text-field>
               </v-flex>
             </v-layout>
             <v-layout wrap>
               <v-flex>
-                <v-checkbox  color="secondary darken-2" label="Project conversation" v-model="conversation.project" :value="conversation.project"></v-checkbox>
-                <v-text-field v-model="conversation.projectDescription" label="Project description" :disabled="!conversation.project" required></v-text-field>
+                <v-checkbox  color="secondary darken-2" label="Project (check if this conversation is about a project)" v-model="conversation.project" :value="conversation.project"></v-checkbox>
+                <v-text-field v-model="conversation.projectDescription" label="Add project description" :disabled="!conversation.project" required></v-text-field>
               </v-flex>
             </v-layout>
             <v-form>
               <v-layout wrap>
                 <v-flex fluid style="width : 100%">
-                  <span class="title">Conversation members</span>
+                  <span class="title">Invite members</span>
                 </v-flex>
                 <v-flex v-if="user.name!='WorkChatAdmin'" class="checkbox-wrapper" xs12 sm4 md4 v-for="(user,index) in getUsers" :key="index">
                   <v-checkbox color="secondary darken-2" :label="user.name" v-model="conversation.selectedUsers" :value="user.uid"></v-checkbox>
@@ -45,8 +45,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-            <v-btn color="blue darken-2" flat @click="discardDialog">Close</v-btn>
-            <v-btn class="white--text" color="secondary darken-2"  @click="initiateNewConversationCreation">Save</v-btn>
+            <v-btn color="blue darken-2" flat @click="discardDialog">Discard</v-btn>
+            <v-btn class="white--text" color="secondary darken-2"  @click="initiateNewConversationCreation">Start</v-btn>
         </v-card-actions>
       </v-card>
       </v-dialog>

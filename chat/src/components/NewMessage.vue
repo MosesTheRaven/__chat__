@@ -7,6 +7,8 @@
             label="type message here.." 
             v-model="message"
             :append-icon="marker ? 'mdi-upload' : 'mdi-upload'"
+            :append-outer-icon="message ? 'mdi-send' : ''"
+           
             
             
             clear-icon="mdi-close-circle"

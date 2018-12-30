@@ -10,7 +10,7 @@
           Project Description
         </v-subheader>
         <p style="margin-left : 16px" v-if="getCurrentProjectConversation">{{getCurrentConversationProjectDescription}}</p>
-        <v-subheader>
+        <v-subheader class="subheader">
           Members
         </v-subheader>
         <v-chip  v-for="(user, i) in getCurrentConversationUsersObject" :key="i" text-color="primary">
@@ -19,14 +19,17 @@
           </v-avatar>
           {{ user.name }}
         </v-chip>
-        <v-subheader>
+        <v-divider style="margin-top : 18px;"></v-divider>
+        <v-subheader class="subheader">
           Files
         </v-subheader>
         <ul class="ul-root">
           <ul class="ul-node" v-if="fileCategory.files.length > 0" v-for="(fileCategory, i) in filesObject" :key="i">
             <span v-on:click="fileCategory.open=!fileCategory.open">
+              <i :class="fileCategory.open ? 'fas fa-caret-down' : 'fas fa-caret-right' " :style="fileCategory.open ?  '' :'margin-left : 5px'"></i>
               <i :class="fileCategory.open ? 'fas fa-folder-open' : 'fas fa-folder' "></i>
               {{fileCategory.name}}
+              ({{fileCategory.files.length}})
             </span>
             <ul v-if="fileCategory.open">
               <li v-for="(file, index) in fileCategory.files" :key="index">
@@ -300,5 +303,8 @@
   }
   .ul-node{
     padding : 0;
+  }
+  .subheader{
+    font-size : 16px;
   }
 </style>

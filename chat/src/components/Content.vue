@@ -1,5 +1,23 @@
 <template>
-  <v-content>
+  <v-content class="wrap-content">
+      <vue-particles v-if="!isLoggedIn" class="particles"
+      color="#1e88e5"
+      :particleOpacity="0.7"
+      :particlesNumber="300"
+      shapeType="circle"
+      :particleSize="4"
+      linesColor="#1e88e5"
+      :linesWidth="1"
+      :lineLinked="true"
+      :lineOpacity="0.4"
+      :linesDistance="150"
+      :moveSpeed="100"
+      :hoverEffect="true"
+      hoverMode="grab"
+      :clickEffect="true"
+      clickMode="push"
+    >
+    </vue-particles>
     <Login v-if="!isLoggedIn"/>
     <Chat v-else @emitToContent="emitToApp"/>
   </v-content>
@@ -40,4 +58,11 @@ export default {
 </script>
 
 <style>
+.particles{
+  position: absolute;
+  top : 0;
+  left: 0;
+  width : 100%;
+  height: 100%;
+}
 </style>

@@ -1,6 +1,25 @@
 <template>
-  <v-container fill-height >
-    <v-layout align-center justify-center >
+  <v-container fill-height class="kek">
+    <v-layout align-center justify-center>
+      <vue-particles
+      color="#dedede"
+      :particleOpacity="0.7"
+      :particlesNumber="80"
+      shapeType="circle"
+      :particleSize="4"
+      linesColor="#dedede"
+      :linesWidth="1"
+      :lineLinked="true"
+      :lineOpacity="0.4"
+      :linesDistance="150"
+      :moveSpeed="3"
+      :hoverEffect="true"
+      hoverMode="grab"
+      :clickEffect="true"
+      clickMode="push"
+    >
+    </vue-particles>
+    
       <v-flex xs12 sm6 md6 class="text-xs-center"  >
         <v-card class="mx-auto" max-width="500" style="padding : 20px; box-shadow : 0px 4px 50px -10px #1E88E5 !important; border-radius : 8px;">
           <v-card-title class="title font-weight-regular justify-center">
@@ -57,7 +76,7 @@
 
             <v-window-item :value="3">
               <div class="pa-3 text-xs-center justify-center">
-                <h3 class="headline font-weight-light mb-4 blue--text text--darken-2">Now pick your avatar</h3>
+                <h3 class="headline font-weight-light mb-4 blue--text text--darken-2">Pick your avatar</h3>
                 <p v-for="i in 10" :key="i">
                   <span v-on:click="processAvatar(i*10+j)" 
                         :class="i*10+j == selectedAvatar ? 'blue--text avatar-picker orange-border' : 'avatar-picker '" 
@@ -68,7 +87,7 @@
                   </span>
                 </p>
                 <p class="headline" >You will look like this: </p> 
-                <v-chip color="primary" text-color="white">
+                <v-chip class="headline" style="padding : 5px"  color="primary" text-color="white">
                   <v-avatar>
                     <i :class="'far ' + avatars[selectedAvatar]"></i>
                   </v-avatar>
@@ -79,8 +98,8 @@
           </v-window>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-spacer v-if="step==2 || step==3"></v-spacer>
-            <v-btn flat color="secondary" @click="stepper()">{{registerButtonText}}</v-btn>
+            <v-spacer v-if="step ==2 || step==3"></v-spacer>
+            <v-btn flat :disabled="hideRegister" color="secondary" @click="stepper()">{{registerButtonText}}</v-btn>
             <v-spacer v-if="step==1"></v-spacer>
             <v-btn v-if="step==1" :disabled="name == '' || password == ''" type="submit" form="loginForm" @click="initiateLogin" color="secondary">Login</v-btn>
             
@@ -104,6 +123,7 @@ export default {
       ...mapGetters(['isLoggedIn', 'getCrashReport']),
   },
   data: () => ({
+      hideRegister : false,
       registerButtonText : 'Sign up',
       registerPassword : '',
       repeatPassword : '',
@@ -242,6 +262,7 @@ export default {
             this.wrongUserData = false
           }
           else {
+            this.registerButtonText = 'Sign Up'
             this.captionText = "Wrong user data"
             this.wrongUserData = true;
           }
@@ -249,7 +270,9 @@ export default {
         }
         case 3 : {
           this.initiateRegistration()
+          this.registerButtonText = "Sign Up"
           this.step = 1
+          this.hideRegister = true
         } 
       } 
       

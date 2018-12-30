@@ -129,11 +129,12 @@ export default {
     }
     @media screen and (min-width: 769px){
         .messages {
-            max-height: calc(100vh - 240px)
+            max-height: calc(100vh - 250px)
         }
     }
     .message-sender-avatar{
         margin-top : -5px;
+        font-size : 1.5em;
     }
     .message-sender{
         margin-top : 5px !important;

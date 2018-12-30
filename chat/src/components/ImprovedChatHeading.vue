@@ -10,11 +10,11 @@
                 </v-avatar>
         </v-toolbar-side-icon>
         <v-toolbar-side-icon v-else>
-            <v-avatar color="secondary" class="ml-2">
+            <v-avatar color="secondary">
                 <v-icon class="white--text ">forum</v-icon>
             </v-avatar>
         </v-toolbar-side-icon>
-        <v-toolbar-title class="px-4">{{ getCurrentConversation }}</v-toolbar-title>
+        <v-toolbar-title class="px-4" :style="this.$mq === 'sm' ? '' : 'margin-top : 10px'">{{ getCurrentConversation }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <!-- <v-btn icon @clicked.stop="toggleRightDrawer">
             <i class="fas fa-bars" ></i>
